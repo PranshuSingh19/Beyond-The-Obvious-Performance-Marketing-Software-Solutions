@@ -155,7 +155,4 @@ npm run lint      # Run ESLint
 ---
 
 ## 📬 Contact Info (Demo)
-
-- **Email:** info@growthagency.com
-- **Phone:** +91 9313961011
-- **Location:** Surat, Gujarat, India
+Author: Pranshu Singh Baghel
