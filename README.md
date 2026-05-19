@@ -1,6 +1,6 @@
 # GrowthAgency — Performance Marketing Landing Page
 
-A modern, high-converting landing page for a **360° Performance Marketing Agency**, built with React, Vite, and Tailwind CSS. Inspired by [techeasify.com](https://techeasify.com/).
+A modern, high-converting landing page for a **360° Performance Marketing Agency**, built with React, Vite, and Tailwind CSS.
 
 ---
 
