@@ -1,202 +1,258 @@
 import { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import aboutImg from '../assets/IT-about.jpg';
 
-const useReveal = () => {
-  const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.15 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-  return [ref, visible];
-};
+gsap.registerPlugin(ScrollTrigger);
 
-const whyUs = [
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-      </svg>
-    ),
-    title: 'Data-Driven Decisions',
-    desc: 'Every strategy is backed by deep analytics and real-time performance data to maximize your ROI.',
-  },
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    ),
-    title: 'Expert Team',
-    desc: 'A dedicated team of certified marketers, designers, and developers working as your growth partners.',
-  },
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    ),
-    title: 'Rapid Execution',
-    desc: 'We move fast. From strategy to launch in days, not weeks — keeping you ahead of the competition.',
-  },
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-      </svg>
-    ),
-    title: 'Transparent Reporting',
-    desc: 'Real-time dashboards and weekly reports so you always know exactly where your budget is going.',
-  },
+const stats = [
+  { value: '150+', label: 'Brands Scaled' },
+  { value: '8+',   label: 'Years Experience' },
+  { value: '98%',  label: 'Client Retention' },
+  { value: '5x',   label: 'Avg. ROAS' },
 ];
 
-const milestones = [
-  { year: '2016', event: 'Agency Founded', desc: 'Started with a vision to transform digital marketing in India.' },
-  { year: '2018', event: '50+ Clients', desc: 'Crossed 50 active clients across fashion, retail, and e-commerce.' },
-  { year: '2021', event: 'Multi-Channel Mastery', desc: 'Expanded to Meta, Google, Amazon, and WhatsApp marketing.' },
-  { year: '2024', event: '150+ Brands Scaled', desc: 'Became one of India\'s most trusted performance marketing agencies.' },
+const pillars = [
+  {
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
+      </svg>
+    ),
+    title: 'Custom Software',
+    desc: 'Scalable web apps, CRMs, SaaS platforms, and ERP systems built for your exact workflow.',
+  },
+  {
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" />
+      </svg>
+    ),
+    title: 'Growth Marketing',
+    desc: 'Data-driven campaigns across Google, Meta, and beyond — engineered for measurable ROI.',
+  },
+  {
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 19l7-7 3 3-7 7-3-3z" /><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+        <path d="M2 2l7.586 7.586" /><circle cx="11" cy="11" r="2" />
+      </svg>
+    ),
+    title: 'Brand & Creative',
+    desc: 'Visual identities and creative systems that make your brand impossible to ignore.',
+  },
+  {
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <rect x="9" y="9" width="6" height="6" /><rect x="2" y="2" width="20" height="20" rx="2" />
+        <line x1="9" y1="2" x2="9" y2="6" /><line x1="15" y1="2" x2="15" y2="6" />
+        <line x1="9" y1="18" x2="9" y2="22" /><line x1="15" y1="18" x2="15" y2="22" />
+        <line x1="2" y1="9" x2="6" y2="9" /><line x1="2" y1="15" x2="6" y2="15" />
+        <line x1="18" y1="9" x2="22" y2="9" /><line x1="18" y1="15" x2="22" y2="15" />
+      </svg>
+    ),
+    title: 'AI Automation',
+    desc: 'Intelligent workflows, chatbots, and automation that eliminate friction and accelerate decisions.',
+  },
 ];
 
 const About = () => {
-  const [sectionRef, sectionVisible] = useReveal();
-  const [timelineRef, timelineVisible] = useReveal();
+  const sectionRef  = useRef(null);
+  const imgRef      = useRef(null);
+  const contentRef  = useRef(null);
+  const statsRef    = useRef([]);
+  const pillarsRef  = useRef([]);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setRevealed(true); },
+      { threshold: 0.08 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!revealed) return;
+    const ctx = gsap.context(() => {
+      // Image slides in from left
+      gsap.fromTo(imgRef.current,
+        { opacity: 0, x: -60 },
+        { opacity: 1, x: 0, duration: 1, ease: 'power3.out' }
+      );
+      // Content slides in from right
+      gsap.fromTo(contentRef.current,
+        { opacity: 0, x: 60 },
+        { opacity: 1, x: 0, duration: 1, ease: 'power3.out', delay: 0.15 }
+      );
+      // Stats pop in
+      gsap.from(statsRef.current.filter(Boolean), {
+        opacity: 0, scale: 0.75, stagger: 0.1, duration: 0.6,
+        ease: 'back.out(1.7)', delay: 0.4,
+      });
+      // Pillar cards
+      gsap.from(pillarsRef.current.filter(Boolean), {
+        opacity: 0, y: 24, stagger: 0.1, duration: 0.7,
+        ease: 'power3.out', delay: 0.5,
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, [revealed]);
 
   return (
-    <section id="about" className="py-20 md:py-28 bg-white relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-50/50 to-transparent pointer-events-none" />
-      <div className="blob w-72 h-72 bg-purple-300 top-20 right-10 opacity-10" />
+    <section
+      id="about"
+      ref={sectionRef}
+      className="about-section relative overflow-hidden"
+      style={{ background: '#ffffff', paddingTop: 'clamp(4rem, 7vw, 8rem)', paddingBottom: 'clamp(4rem, 7vw, 8rem)' }}
+    >
+      {/* Background texture */}
+      <div className="absolute inset-0 dot-pattern opacity-50 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-2/3 h-full pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 60% 80% at 100% 50%, rgba(83,16,91,0.06) 0%, transparent 70%)' }} />
+      <div className="absolute bottom-0 left-0 w-1/2 h-1/2 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 60% 60% at 0% 100%, rgba(83,16,91,0.04) 0%, transparent 70%)' }} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
-        <div
-          ref={sectionRef}
-          className={`text-center mb-16 transition-all duration-700 ${sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-        >
-          <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-full px-4 py-1.5 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
-            <span className="text-sm font-semibold text-blue-700 uppercase tracking-wider">About Us</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-4">
-            Result-Driven Digital Marketing &{' '}
-            <span className="gradient-text">Web Development Agency</span>
-          </h2>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            Because we focus on results that matter to your business — not vanity metrics.
-          </p>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Section label */}
+        <div className="flex items-center gap-3 mb-12 about-label">
+          <div className="w-8 h-px" style={{ background: 'linear-gradient(90deg, transparent, #53105B)' }} />
+          <span className="text-xs font-semibold tracking-widest uppercase text-silver">About Us</span>
+          <div className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, rgba(83,16,91,0.3), transparent)' }} />
         </div>
 
-        {/* Main content grid */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-20">
-          {/* Left — image / visual */}
-          <div className={`transition-all duration-700 delay-200 ${sectionVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
-            <div className="relative">
-              {/* Main visual card */}
-              <div className="relative bg-gradient-to-br from-blue-600 to-purple-700 rounded-3xl p-8 text-white overflow-hidden shadow-premium">
-                <div className="absolute inset-0 opacity-10" style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E")`
-                }} />
-                <div className="relative z-10">
-                  <div className="text-6xl font-black mb-2">8+</div>
-                  <div className="text-xl font-semibold mb-1">Years of Excellence</div>
-                  <div className="text-blue-200 text-sm">Delivering measurable growth since 2016</div>
+        {/* ── Main two-column layout ── */}
+        <div className="about-layout">
 
-                  <div className="mt-8 grid grid-cols-2 gap-4">
-                    {[
-                      { n: '₹50Cr+', l: 'Ad Spend Managed' },
-                      { n: '150+', l: 'Brands Scaled' },
-                      { n: '5x', l: 'Average ROAS' },
-                      { n: '98%', l: 'Client Retention' },
-                    ].map(({ n, l }) => (
-                      <div key={l} className="bg-white/10 rounded-2xl p-4 backdrop-blur-sm border border-white/20">
-                        <div className="text-2xl font-black">{n}</div>
-                        <div className="text-xs text-blue-200 mt-0.5">{l}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+          {/* ── LEFT — Image column ── */}
+          <div ref={imgRef} className="about-img-col">
+
+            {/* Image frame */}
+            <div className="about-img-frame relative">
+              {/* Decorative corner accents */}
+              <div className="about-corner about-corner-tl" />
+              <div className="about-corner about-corner-br" />
+
+              {/* Purple glow behind image */}
+              <div className="absolute -inset-4 rounded-3xl pointer-events-none"
+                style={{ background: 'radial-gradient(ellipse 80% 80% at 50% 50%, rgba(83,16,91,0.25) 0%, transparent 70%)', filter: 'blur(20px)' }} />
+
+              {/* The image */}
+              <div className="about-img-wrapper relative rounded-2xl overflow-hidden"
+                style={{ border: '1px solid rgba(83,16,91,0.25)' }}>
+                <img
+                  src={aboutImg}
+                  alt="Beyond The Obvious — Technology & Growth Agency"
+                  className="about-img w-full h-full object-cover"
+                />
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 pointer-events-none"
+                  style={{ background: 'linear-gradient(180deg, transparent 60%, rgba(248,247,255,0.4) 100%)' }} />
               </div>
 
-              {/* Floating card */}
-              <div className="absolute -bottom-6 -right-6 bg-white rounded-2xl shadow-card-hover p-4 border border-blue-50 max-w-[180px]  md:z-50">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-8 h-8 rounded-xl bg-green-100 flex items-center justify-center">
-                    <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-xs font-bold text-gray-800">Certified Agency</span>
-                </div>
-                <div className="flex gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <div className="text-[10px] text-gray-400 mt-1">4.9/5 from 200+ reviews</div>
+              {/* Floating badge — top right */}
+              <div className="about-badge-tr absolute rounded-xl px-3 py-2 flex items-center gap-2"
+                style={{ background: '#ffffff', border: '1px solid rgba(83,16,91,0.25)', boxShadow: '0 2px 12px rgba(83,16,91,0.1)', top: '-1rem', right: '-1rem' }}>
+                <span className="w-2 h-2 rounded-full pulse-glow flex-shrink-0" style={{ background: '#8B1A9A' }} />
+                <span className="text-xs font-semibold chrome-text whitespace-nowrap">AI-Powered</span>
               </div>
+
+            </div>
+
+            {/* Stats grid below image */}
+            <div className="about-stats grid grid-cols-2 gap-3 mt-8">
+              {stats.map(({ value, label }, i) => (
+                <div
+                  key={label}
+                  ref={el => (statsRef.current[i] = el)}
+                  className="rounded-2xl p-4 text-center"
+                  style={{ background: '#ffffff', border: '1px solid rgba(83,16,91,0.15)', boxShadow: '0 2px 10px rgba(83,16,91,0.06)' }}
+                >
+                  <div className="font-display font-black purple-text leading-none mb-1"
+                    style={{ fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)' }}>
+                    {value}
+                  </div>
+                  <div className="text-xs text-silver">{label}</div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Right — why us */}
-          <div className={`transition-all duration-700 delay-300 ${sectionVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">
-              Why Businesses Choose Us as Their{' '}
-              <span className="gradient-text">Digital Growth Partner</span>
-            </h3>
-            <p className="text-gray-500 mb-8">
-              We combine creativity with data science to build campaigns that don't just look good — they perform exceptionally.
+          {/* ── RIGHT — Content column ── */}
+          <div ref={contentRef} className="about-content-col">
+
+            {/* Eyebrow */}
+            <p className="text-xl font-semibold tracking-widest uppercase mb-3"
+              style={{ color: '#8B1A9A' }}>
+              Who We Are
             </p>
 
-            <div className="space-y-5">
-              {whyUs.map(({ icon, title, desc }, i) => (
-                <div
-                  key={title}
-                  className={`flex gap-4 p-4 rounded-2xl border border-gray-100 hover:border-blue-200 hover:bg-blue-50/30 transition-all duration-300 card-lift transition-all duration-700 ${sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-                  style={{ transitionDelay: `${400 + i * 100}ms` }}
-                >
-                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center text-blue-600">
-                    {icon}
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900 mb-1">{title}</h4>
-                    <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+            {/* Heading */}
+            <h2 className="about-heading font-display font-black chrome-text leading-tight mb-5"
+              style={{ fontSize: 'clamp(1.75rem, 3.5vw, 3.75rem)' }}>
+              We Build What Others<br />
+              <span className="purple-text">Can't Imagine</span>
+            </h2>
 
-        {/* Timeline */}
-        <div
-          ref={timelineRef}
-          className={`transition-all duration-700 ${timelineVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-        >
-          <h3 className="text-2xl font-bold text-center text-gray-900 mb-10">Our Journey</h3>
-          <div className="relative">
-            {/* Line */}
-            <div className="hidden md:block absolute top-7 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-200 via-purple-300 to-blue-200" />
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              {milestones.map(({ year, event, desc }, i) => (
-                <div
-                  key={year}
-                  className={`relative text-center transition-all duration-700 ${timelineVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
-                  style={{ transitionDelay: `${i * 150}ms` }}
-                >
-                  <div className="w-14 h-14 mx-auto rounded-full bg-gradient-to-br from-blue-600 to-purple-700 flex items-center justify-center text-white font-black text-sm shadow-glow-blue mb-4 relative z-10">
-                    {year.slice(2)}
+            {/* Description */}
+            <p className="about-desc text-silver leading-relaxed mb-6"
+              style={{ fontSize: 'clamp(0.875rem, 1.3vw, 1.125rem)' }}>
+              <strong className="text-chrome font-semibold">Beyond The Obvious</strong> is a full-spectrum technology and growth company built for businesses that refuse to settle. From custom software and AI-powered automation to performance marketing and brand strategy, we engineer outcomes that matter.
+            </p>
+            <p className="about-desc text-silver leading-relaxed mb-8"
+              style={{ fontSize: 'clamp(0.875rem, 1.3vw, 1.125rem)' }}>
+              Every solution we build is designed to <span className="text-chrome">scale</span>, <span className="text-chrome">perform</span>, and <span className="text-chrome">evolve</span> with your ambitions. We don't just deliver projects — we become the technology partner that drives your next phase of growth.
+            </p>
+
+            {/* What sets us apart */}
+            <div className="mb-8">
+              <h3 className="text-xs font-semibold tracking-widest uppercase text-silver mb-4">What Sets Us Apart</h3>
+              <div className="space-y-3">
+                {[
+                  { label: 'End-to-End Ownership', text: 'From strategy to deployment — one team, full accountability.' },
+                  { label: 'ROI-First Thinking',   text: 'Every decision is tied to measurable business outcomes.' },
+                  { label: 'Agile & Transparent',  text: 'Fast iterations, clear communication, no surprises.' },
+                ].map(({ label, text }) => (
+                  <div key={label} className="flex items-start gap-3">
+                    <div className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5"
+                      style={{ background: 'rgba(83,16,91,0.1)', border: '1px solid rgba(83,16,91,0.25)' }}>
+                      <svg className="w-2.5 h-2.5" fill="none" stroke="#53105B" viewBox="0 0 24 24" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </div>
+                    <div>
+                      <span className="text-sm font-semibold text-chrome">{label} — </span>
+                      <span className="text-sm text-silver">{text}</span>
+                    </div>
                   </div>
-                  <div className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">{year}</div>
-                  <div className="font-bold text-gray-900 mb-2">{event}</div>
-                  <p className="text-xs text-gray-500 leading-relaxed">{desc}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
+
+            {/* CTA */}
+            {/* <div className="flex flex-wrap gap-3">
+              <button
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                className="magnetic-btn px-6 py-3 rounded-xl text-sm font-semibold text-chrome flex items-center gap-2"
+                style={{ background: 'linear-gradient(135deg, #53105B, #8B1A9A)', boxShadow: '0 0 25px rgba(83,16,91,0.4)' }}
+              >
+                Start a Conversation
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+                </svg>
+              </button>
+              <button
+                onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-6 py-3 rounded-xl text-sm font-semibold glass transition-all duration-300"
+                style={{ color: '#E5E5EB', border: '1px solid rgba(229,229,235,0.12)' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(83,16,91,0.6)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(229,229,235,0.12)'; }}
+              >
+                Our Services
+              </button>
+            </div> */}
           </div>
         </div>
       </div>

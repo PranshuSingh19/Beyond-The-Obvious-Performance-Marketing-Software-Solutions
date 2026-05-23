@@ -1,259 +1,246 @@
 import { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const useReveal = (threshold = 0.1) => {
-  const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [threshold]);
-  return [ref, visible];
-};
+gsap.registerPlugin(ScrollTrigger);
 
 const services = [
   {
+    id: 'software',
+    title: 'Software & Technology Solutions',
+    subtitle: 'Custom Development · SaaS · ERP · AI',
+    color: 'rgba(83,16,91,0.06)',
+    accent: '#8B1A9A',
+    items: [
+      'Custom Website Development',
+      'CRM Development & Business Process Automation',
+      'SaaS Product Development',
+      'ERP Solutions & Enterprise Application Development',
+      'AI & Intelligent Automation Solutions',
+      'Website Maintenance & Managed Infrastructure Services',
+    ],
     icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
       </svg>
     ),
-    title: 'Meta Ads',
-    subtitle: 'Facebook & Instagram',
-    desc: 'Hyper-targeted Meta campaigns that drive qualified traffic, leads, and sales with precision audience segmentation.',
-    tags: ['Facebook Ads', 'Instagram Ads', 'Retargeting'],
-    iconBg: '#eff6ff',
-    iconColor: '#2563eb',
-    topBar: '#2563eb',
   },
   {
+    id: 'marketing',
+    title: 'Growth Marketing Solutions',
+    subtitle: 'Performance · Lead Gen · Google · Meta',
+    color: 'rgba(83,16,91,0.06)',
+    accent: '#7B1A8A',
+    items: [
+      'Performance Marketing Campaign Management',
+      'Lead Generation & Customer Acquisition Services',
+      'Google Ads & Meta Advertising Management',
+      'Social Media Marketing & Brand Engagement',
+      'Conversion Rate Optimization (CRO)',
+      'ROI-Driven Advertising & Growth Strategy',
+      'Marketing Analytics & Performance Reporting',
+    ],
     icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
+        <line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" />
+        <line x1="6" y1="20" x2="6" y2="14" /><line x1="2" y1="20" x2="22" y2="20" />
       </svg>
     ),
-    title: 'Google Ads',
-    subtitle: 'Search & Display',
-    desc: 'Dominate search results with high-converting Google campaigns — from Search to Shopping to YouTube.',
-    tags: ['Search Ads', 'Shopping Ads', 'YouTube Ads'],
-    iconBg: '#fef2f2',
-    iconColor: '#ef4444',
-    topBar: '#ef4444',
   },
   {
+    id: 'branding',
+    title: 'Branding & Creative Solutions',
+    subtitle: 'Brand Strategy · Visual Design · Identity',
+    color: 'rgba(83,16,91,0.06)',
+    accent: '#6B0A7A',
+    items: [
+      'AI-Powered Customer Personalization Solutions',
+      'Brand Strategy & Market Positioning',
+      'Creative Visual Design Services',
+      'Logo Design, Brand Identity & Guidelines',
+    ],
     icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="12 2 2 7 12 12 22 7 12 2" />
+        <polyline points="2 17 12 22 22 17" />
+        <polyline points="2 12 12 17 22 12" />
       </svg>
     ),
-    title: 'Amazon Ads',
-    subtitle: 'Marketplace Growth',
-    desc: 'Boost your Amazon visibility and sales with Sponsored Products, Brands, and Display campaigns.',
-    tags: ['Sponsored Products', 'DSP', 'Catalog Mgmt'],
-    iconBg: '#fefce8',
-    iconColor: '#d97706',
-    topBar: '#f59e0b',
   },
   {
+    id: 'workforce',
+    title: 'Workforce & IT Staffing Solutions',
+    subtitle: 'Back Office · Field Support · On-Demand IT',
+    color: 'rgba(83,16,91,0.06)',
+    accent: '#5B0A6A',
+    items: [
+      'Back Office Operations Support Services',
+      'Field Workforce Support Services',
+      'Dedicated Developers & IT Professionals On Demand',
+    ],
     icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
       </svg>
     ),
-    title: 'Web Development',
-    subtitle: 'UI/UX & Dev',
-    desc: 'Stunning, conversion-optimized websites and Shopify stores built for performance and user experience.',
-    tags: ['UI/UX Design', 'Shopify', 'Web Dev'],
-    iconBg: '#faf5ff',
-    iconColor: '#7c3aed',
-    topBar: '#7c3aed',
-  },
-  {
-    icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-      </svg>
-    ),
-    title: 'Email Marketing',
-    subtitle: 'Retention & Revenue',
-    desc: 'Personalized email sequences that nurture leads, recover carts, and drive repeat purchases at scale.',
-    tags: ['Automation', 'Drip Campaigns', 'Segmentation'],
-    iconBg: '#ecfeff',
-    iconColor: '#0891b2',
-    topBar: '#06b6d4',
-  },
-  {
-    icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-      </svg>
-    ),
-    title: 'Social Media',
-    subtitle: 'Brand Building',
-    desc: 'Strategic social media management that builds brand authority, community, and organic reach.',
-    tags: ['Content Strategy', 'Community', 'Influencer'],
-    iconBg: '#fdf2f8',
-    iconColor: '#db2777',
-    topBar: '#ec4899',
-  },
-  {
-    icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-      </svg>
-    ),
-    title: 'SEO',
-    subtitle: 'Organic Growth',
-    desc: 'Technical and content SEO strategies that rank your brand on page one and drive sustainable organic traffic.',
-    tags: ['Technical SEO', 'Content SEO', 'Link Building'],
-    iconBg: '#f0fdf4',
-    iconColor: '#16a34a',
-    topBar: '#22c55e',
-  },
-  {
-    icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-      </svg>
-    ),
-    title: 'Branding',
-    subtitle: 'Identity & Strategy',
-    desc: 'Craft a powerful brand identity that resonates with your audience and stands out in a crowded market.',
-    tags: ['Brand Identity', 'Logo Design', 'Brand Strategy'],
-    iconBg: '#eef2ff',
-    iconColor: '#4f46e5',
-    topBar: '#6366f1',
   },
 ];
 
-const process = [
-  { step: '01', title: 'Discovery & Audit', desc: 'Deep dive into your business, audience, and current marketing performance.' },
-  { step: '02', title: 'Strategy Blueprint', desc: 'Custom multi-channel strategy tailored to your goals and budget.' },
-  { step: '03', title: 'Launch & Execute', desc: 'Rapid campaign launch with creative assets and precise targeting.' },
-  { step: '04', title: 'Optimize & Scale', desc: 'Continuous A/B testing and optimization to maximize ROAS and scale profitably.' },
-];
+const ToggleIcon = ({ expanded }) => (
+  <svg
+    className="w-4 h-4 transition-transform duration-300"
+    style={{ transform: expanded ? 'rotate(45deg)' : 'rotate(0deg)', color: '#1A1A2E' }}
+    fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"
+  >
+    <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+  </svg>
+);
 
-const Services = () => {
-  const [headerRef, headerVisible] = useReveal();
-  const [gridRef, gridVisible] = useReveal();
-  const [processRef, processVisible] = useReveal();
+const ChevronRight = ({ color }) => (
+  <svg className="w-3 h-3 flex-shrink-0 mt-0.5" fill="none" stroke={color} viewBox="0 0 24 24" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="9 18 15 12 9 6" />
+  </svg>
+);
+
+const ServiceCard = ({ service }) => {
+  const [expanded, setExpanded] = useState(false);
 
   return (
-    <section id="services" className="py-20 md:py-28 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
-      {/* Background blobs */}
-      <div className="blob w-96 h-96 bg-blue-300 -top-20 -left-20 opacity-10" />
-      <div className="blob w-80 h-80 bg-purple-300 bottom-0 right-0 opacity-10" />
+    <div
+      className="services-card relative rounded-2xl overflow-hidden cursor-pointer group transition-all duration-500"
+      style={{
+        background: expanded
+          ? 'linear-gradient(135deg, rgba(83,16,91,0.08) 0%, #ffffff 100%)'
+          : '#ffffff',
+        border: expanded ? `1px solid ${service.accent}` : '1px solid rgba(83,16,91,0.12)',
+        boxShadow: expanded ? `0 8px 40px rgba(83,16,91,0.15)` : '0 2px 12px rgba(83,16,91,0.06)',
+      }}
+      onMouseEnter={(e) => { if (!expanded) { e.currentTarget.style.borderColor = 'rgba(83,16,91,0.35)'; e.currentTarget.style.boxShadow = '0 8px 30px rgba(83,16,91,0.12)'; } }}
+      onMouseLeave={(e) => { if (!expanded) { e.currentTarget.style.borderColor = 'rgba(83,16,91,0.12)'; e.currentTarget.style.boxShadow = '0 2px 12px rgba(83,16,91,0.06)'; } }}
+      onClick={() => setExpanded(!expanded)}
+    >
+      <div className="h-0.5 w-full" style={{ background: `linear-gradient(90deg, ${service.accent}, transparent)` }} />
+
+      <div className="services-card-inner p-5 md:p-6 lg:p-8">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex items-start gap-3 flex-1 min-w-0">
+            <span className="text-xs font-mono font-bold tracking-widest mt-1 flex-shrink-0" style={{ color: service.accent }}>
+                     </span>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1 flex-wrap">
+                <div className="services-icon p-2 rounded-xl flex-shrink-0" style={{ background: 'rgba(83,16,91,0.08)', color: '#53105B' }}>
+                  {service.icon}
+                </div>
+                <div className="min-w-0">
+                  <h3 className="services-card-title font-display font-bold chrome-text leading-tight">{service.title}</h3>
+                  <p className="services-card-subtitle text-xs text-silver mt-0.5">{service.subtitle}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300"
+            style={{ background: expanded ? service.accent : 'rgba(83,16,91,0.08)' }}
+          >
+            <ToggleIcon expanded={expanded} />
+          </div>
+        </div>
+
+        <div className={`overflow-hidden transition-all duration-500 ${expanded ? 'max-h-[500px] mt-5' : 'max-h-0'}`}>
+          <div className="h-px mb-4" style={{ background: `linear-gradient(90deg, ${service.accent}60, transparent)` }} />
+          <ul className="space-y-2">
+            {service.items.map((item) => (
+              <li key={item} className="flex items-start gap-3 text-sm text-silver">
+                <ChevronRight color={service.accent} />
+                <span className="services-item-text">{item}</span>
+              </li>
+            ))}
+          </ul>
+          <button
+            className="mt-5 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all duration-300 flex items-center gap-2 text-white"
+            style={{ background: `linear-gradient(135deg, #53105B, #8B1A9A)`, border: `1px solid ${service.accent}` }}
+            onClick={(e) => { e.stopPropagation(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
+          >
+            Discuss This Service
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Services = () => {
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const cardsRef = useRef(null);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setRevealed(true); },
+      { threshold: 0.05 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!revealed) return;
+    const ctx = gsap.context(() => {
+      gsap.from(headerRef.current, { opacity: 0, y: 30, duration: 0.9, ease: 'power3.out' });
+      const cards = cardsRef.current?.querySelectorAll('.service-card-item');
+      if (cards) gsap.from(cards, { opacity: 0, y: 50, stagger: 0.15, duration: 0.8, ease: 'power3.out', delay: 0.2 });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, [revealed]);
+
+  return (
+    <section
+      id="services"
+      ref={sectionRef}
+      className="services-section relative overflow-hidden"
+      style={{ background: '#F8F7FF', paddingTop: 'clamp(3rem, 6vw, 8rem)', paddingBottom: 'clamp(3rem, 6vw, 8rem)' }}
+    >
+      <div className="absolute inset-0 grid-pattern opacity-60 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-px"
+        style={{ background: 'linear-gradient(90deg, transparent, rgba(83,16,91,0.3), transparent)' }} />
+      <div className="absolute bottom-0 left-0 w-full h-px"
+        style={{ background: 'linear-gradient(90deg, transparent, rgba(83,16,91,0.2), transparent)' }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(83,16,91,0.05) 0%, transparent 70%)', filter: 'blur(60px)' }} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div
-          ref={headerRef}
-          className={`text-center mb-16 transition-all duration-700 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-        >
-          <div className="inline-flex items-center gap-2 bg-purple-50 border border-purple-100 rounded-full px-4 py-1.5 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-purple-600" />
-            <span className="text-sm font-semibold text-purple-700 uppercase tracking-wider">Our Services</span>
+        <div ref={headerRef} className="text-center mb-10 md:mb-14 lg:mb-16">
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="w-8 h-px" style={{ background: 'linear-gradient(90deg, transparent, #53105B)' }} />
+            <span className="text-xs font-semibold tracking-widest uppercase text-silver">Our Services</span>
+            <div className="w-8 h-px" style={{ background: 'linear-gradient(90deg, #53105B, transparent)' }} />
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-4">
-            Our 360° Digital Marketing &{' '}
-            <span className="gradient-text">Development Services</span>
+          <h2 className="services-heading font-display font-black chrome-text mb-4 leading-tight"
+            style={{ fontSize: 'clamp(1.6rem, 4vw, 4rem)' }}>
+            Four Pillars of<br /><span className="purple-text">Transformative Growth</span>
           </h2>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            Smart solutions, 24/7 service, and digital growth — everything your brand needs under one roof.
+          <p className="services-subtext text-silver max-w-2xl mx-auto"
+            style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.25rem)' }}>
+            Everything your business needs to build, grow, and dominate — under one roof.
           </p>
         </div>
 
-        {/* Services grid */}
-        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-          {services.map(({ icon, title, subtitle, desc, tags, iconBg, iconColor, topBar }, i) => (
-            <div
-              key={title}
-              className={`service-card group relative bg-white rounded-2xl p-6 border border-gray-100 card-lift cursor-pointer overflow-hidden transition-all duration-700 ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-              style={{ transitionDelay: `${i * 80}ms` }}
-            >
-              {/* Top color bar */}
-              <div className="absolute top-0 left-0 right-0 h-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: topBar }} />
-
-              <div className="relative z-10">
-                {/* Icon */}
-                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 border border-gray-100" style={{ background: iconBg }}>
-                  <div style={{ color: iconColor }}>
-                    {icon}
-                  </div>
-                </div>
-
-                <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">{subtitle}</div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-gray-900">{title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed mb-4">{desc}</p>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-1.5">
-                  {tags.map((tag) => (
-                    <span key={tag} className="text-[10px] font-semibold bg-gray-100 group-hover:bg-white/70 text-gray-600 rounded-full px-2.5 py-1 transition-colors duration-300">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Arrow */}
-                <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-blue-600 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-0 group-hover:translate-x-1">
-                  Learn more
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </div>
-              </div>
+        {/* Cards grid */}
+        <div ref={cardsRef} className="services-grid grid gap-4 md:gap-5">
+          {services.map((service) => (
+            <div key={service.id} className="service-card-item">
+              <ServiceCard service={service} />
             </div>
           ))}
-        </div>
-
-        {/* Process section */}
-        <div
-          ref={processRef}
-          className={`transition-all duration-700 ${processVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-        >
-          <div className="bg-gradient-to-br from-blue-600 to-purple-700 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
-            {/* Background pattern */}
-            <div className="absolute inset-0 opacity-10" style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-            }} />
-
-            <div className="relative z-10">
-              <div className="text-center mb-10">
-                <div className="inline-flex items-center gap-2 bg-white/20 rounded-full px-4 py-1.5 mb-4">
-                  <span className="text-sm font-semibold uppercase tracking-wider">Our Process</span>
-                </div>
-                <h3 className="text-2xl md:text-3xl font-black mb-2">
-                  Clear Steps That Ensure Scalable, Secure & Hassle-Free Growth
-                </h3>
-                <p className="text-blue-200 max-w-xl mx-auto">
-                  A proven 4-step framework that takes your brand from strategy to scale.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {process.map(({ step, title, desc }, i) => (
-                  <div
-                    key={step}
-                    className={`relative bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 transition-all duration-700 ${processVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
-                    style={{ transitionDelay: `${i * 120}ms` }}
-                  >
-                    {/* Connector line */}
-                    {i < process.length - 1 && (
-                      <div className="hidden lg:block absolute top-8 -right-3 w-6 h-0.5 bg-white/30 z-10" />
-                    )}
-                    <div className="text-4xl font-black text-white/20 mb-3">{step}</div>
-                    <h4 className="font-bold text-white mb-2">{title}</h4>
-                    <p className="text-sm text-blue-200 leading-relaxed">{desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>

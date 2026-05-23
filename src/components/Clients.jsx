@@ -1,20 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const useReveal = (threshold = 0.1) => {
-  const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [threshold]);
-  return [ref, visible];
-};
+gsap.registerPlugin(ScrollTrigger);
 
-// Client brand names (text-based logos since we don't have actual SVGs)
 const clientBrands = [
   'Ganga Fashions', 'Heritage', 'House of Mira', 'House of Pinks', 'IDRA Wellness',
   'Label Sugar', 'Lil Drama', 'Little Millennium', 'Mahee Jaipur', 'Maitri Jaipur',
@@ -26,269 +15,311 @@ const clientBrands = [
   'ARFL', 'Armur', 'Autumn Lane', 'Big Bunny', 'Bombay Bloom',
 ];
 
+/* ── Icons ── */
+const icons = {
+  fashion: <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z" /></svg>,
+  optics:  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="4" /><line x1="4.93" y1="4.93" x2="9.17" y2="9.17" /><line x1="14.83" y1="14.83" x2="19.07" y2="19.07" /><line x1="14.83" y1="9.17" x2="19.07" y2="4.93" /><line x1="4.93" y1="19.07" x2="9.17" y2="14.83" /></svg>,
+  rocket:  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z" /><path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z" /><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" /><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" /></svg>,
+  diamond: <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round"><path d="M6 3h12l4 6-10 13L2 9 6 3z" /><path d="M11 3L8 9l4 13 4-13-3-6" /><line x1="2" y1="9" x2="22" y2="9" /></svg>,
+  flower:  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>,
+  star:    <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>,
+};
+
+const projectCards = [
+  { brand: 'Ganga Fashions', category: 'Fashion E-commerce', metric: '4.2x ROAS',       detail: 'Scaled Meta Ads from ₹50K to ₹5L/month',                       icon: icons.fashion },
+  { brand: 'Perfect Optics', category: 'Retail & Eyewear',   metric: '+55% Revenue',    detail: 'Multi-channel strategy across Meta, Google & WhatsApp',         icon: icons.optics  },
+  { brand: 'Reroute',        category: 'Lifestyle Brand',     metric: '3x Growth',       detail: 'Turned stagnant ads into a 3x monthly growth engine',           icon: icons.rocket  },
+  { brand: 'Siara Women',    category: "Women's Fashion",     metric: '+40% Repeat',     detail: 'Email automation drove 40% boost in repeat purchases',          icon: icons.diamond },
+  { brand: 'Bombay Bloom',   category: 'Lifestyle & Wellness',metric: '3x Revenue',      detail: '360° approach tripled monthly revenue in 8 months',            icon: icons.flower  },
+  { brand: 'APNY',           category: 'D2C Brand',           metric: '18mo Partnership',detail: 'Long-term PPC excellence with phenomenal results',              icon: icons.star    },
+];
+
 const testimonials = [
-  {
-    name: 'Aadesh S.',
-    role: 'Owner, APNY',
-    text: "TechEasify's team excels at finding solutions for PPC campaigns through detailed research. We've worked with them for over 18 months and admire their ability to think from the customer's perspective. Their approach is truly phenomenal — partnering with them is absolutely worth it!",
-    rating: 5,
-    avatar: 'AS',
-    avatarBg: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
-  },
-  {
-    name: 'Parth D.',
-    role: 'Founder, Reroute',
-    text: 'Working with this agency has been amazing! When we first approached them, our sales were stagnant and Facebook Ads were underperforming. Their detailed ad account evaluation and multi-channel strategy turned things around, driving 3x growth per month. Truly impressive results!',
-    rating: 5,
-    avatar: 'PD',
-    avatarBg: 'linear-gradient(135deg, #a855f7, #7e22ce)',
-  },
-  {
-    name: 'Bhavesh S.',
-    role: 'Owner, Perfect Optics',
-    text: 'Their expert advice transformed our failed ad efforts. By combining Meta, Google, email, and WhatsApp strategies, they drove a 55% revenue spike. Their campaigns are fresh, creative, and results-focused — a true hidden engine behind every e-commerce brand\'s success!',
-    rating: 5,
-    avatar: 'BS',
-    avatarBg: 'linear-gradient(135deg, #06b6d4, #2563eb)',
-  },
-  {
-    name: 'Simmi S.',
-    role: 'Founder, 17:17 Designer Wear',
-    text: "I've worked with three other development companies in the last four years but have remained with this agency for 2 years as they are by far the most competent in creating user-friendly websites. Mostly satisfied with the thoughtfulness and pride the entire team always has in their work.",
-    rating: 5,
-    avatar: 'SS',
-    avatarBg: 'linear-gradient(135deg, #ec4899, #be185d)',
-  },
-  {
-    name: 'Surabhi J.',
-    role: 'Founder, Siara Women',
-    text: 'This is an all-in-one marketing agency, and their email marketing service stands out in a big way. Within just six weeks, we saw a 40% boost in repeat purchases. They take great care in personalizing every email to make our customers feel special. Their creativity and strategy are unmatched!',
-    rating: 5,
-    avatar: 'SJ',
-    avatarBg: 'linear-gradient(135deg, #22c55e, #15803d)',
-  },
-  {
-    name: 'Rahul M.',
-    role: 'CEO, Bombay Bloom',
-    text: 'The team completely transformed our digital presence. From a struggling brand to a recognized name in our niche — their 360° approach covering ads, SEO, and social media made all the difference. Our monthly revenue has tripled in just 8 months.',
-    rating: 5,
-    avatar: 'RM',
-    avatarBg: 'linear-gradient(135deg, #f97316, #ef4444)',
-  },
+  { name: 'Aadesh S.',  role: 'Owner, APNY',           initials: 'AS', text: "Their team excels at finding solutions through detailed research. We've worked with them for over 18 months and admire their ability to think from the customer's perspective." },
+  { name: 'Parth D.',   role: 'Founder, Reroute',      initials: 'PD', text: 'When we first approached them, our sales were stagnant. Their multi-channel strategy turned things around, driving 3x growth per month. Truly impressive results!' },
+  { name: 'Bhavesh S.', role: 'Owner, Perfect Optics', initials: 'BS', text: 'By combining Meta, Google, email, and WhatsApp strategies, they drove a 55% revenue spike. Their campaigns are fresh, creative, and results-focused.' },
+  { name: 'Surabhi J.', role: 'Founder, Siara Women',  initials: 'SJ', text: 'Within just six weeks, we saw a 40% boost in repeat purchases. They take great care in personalizing every email to make our customers feel special.' },
 ];
 
-const caseStudies = [
-  {
-    brand: 'Ganga Fashions',
-    category: 'Fashion E-commerce',
-    result: '4.2x ROAS',
-    desc: 'Scaled Meta Ads from ₹50K to ₹5L/month while maintaining 4.2x return on ad spend.',
-    barColor: 'linear-gradient(135deg, #3b82f6, #7c3aed)',
-    icon: '👗',
-  },
-  {
-    brand: 'Perfect Optics',
-    category: 'Retail & Eyewear',
-    result: '+55% Revenue',
-    desc: 'Multi-channel strategy combining Meta, Google, and WhatsApp drove a 55% revenue spike in 3 months.',
-    barColor: 'linear-gradient(135deg, #06b6d4, #2563eb)',
-    icon: '👓',
-  },
-  {
-    brand: 'Reroute',
-    category: 'Lifestyle Brand',
-    result: '3x Monthly Growth',
-    desc: 'Turned stagnant Facebook Ads into a 3x monthly growth engine through detailed account restructuring.',
-    barColor: 'linear-gradient(135deg, #a855f7, #ec4899)',
-    icon: '🚀',
-  },
-  {
-    brand: 'Siara Women',
-    category: "Women's Fashion",
-    result: '+40% Repeat Purchases',
-    desc: 'Email marketing automation drove a 40% boost in repeat purchases within just 6 weeks.',
-    barColor: 'linear-gradient(135deg, #ec4899, #be185d)',
-    icon: '💎',
-  },
-];
+/* ── Result card (light theme) ── */
+const ResultCard = ({ card }) => {
+  const cardRef = useRef(null);
+  const [hovered, setHovered] = useState(false);
 
-const StarRating = ({ count }) => (
-  <div className="flex gap-0.5">
-    {[...Array(count)].map((_, i) => (
-      <svg key={i} className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-      </svg>
-    ))}
-  </div>
-);
+  const handleMouseMove = (e) => {
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    cardRef.current.style.transform = `perspective(700px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) scale(1.02)`;
+  };
+  const handleMouseLeave = () => {
+    setHovered(false);
+    cardRef.current.style.transform = 'perspective(700px) rotateY(0deg) rotateX(0deg) scale(1)';
+  };
 
+  return (
+    <div ref={cardRef}
+      className="tilt-card rounded-2xl overflow-hidden cursor-pointer w-full"
+      style={{
+        background: hovered ? 'linear-gradient(135deg, rgba(83,16,91,0.07) 0%, #ffffff 100%)' : '#ffffff',
+        border: hovered ? '1px solid rgba(83,16,91,0.45)' : '1px solid rgba(83,16,91,0.14)',
+        transition: 'transform 0.15s ease, border-color 0.3s ease, box-shadow 0.3s ease',
+        boxShadow: hovered ? '0 16px 48px rgba(83,16,91,0.14)' : '0 4px 16px rgba(83,16,91,0.07)',
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={handleMouseLeave}>
+
+      <div className="h-0.5" style={{ background: 'linear-gradient(90deg, #53105B, #8B1A9A, transparent)' }} />
+      <div className="p-5 md:p-6">
+        <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
+          style={{ background: 'rgba(83,16,91,0.08)', color: '#53105B' }}>
+          {card.icon}
+        </div>
+        <div className="font-semibold tracking-widest uppercase mb-1"
+          style={{ color: '#8B1A9A', fontSize: 'clamp(0.65rem, 1vw, 0.75rem)' }}>
+          {card.category}
+        </div>
+        <h4 className="font-display font-bold mb-2" style={{ color: '#1A1A2E', fontSize: 'clamp(1rem, 1.5vw, 1.2rem)' }}>
+          {card.brand}
+        </h4>
+        <div className="overflow-hidden transition-all duration-300" style={{ maxHeight: hovered ? '120px' : '52px' }}>
+          <div className="font-black mb-2 purple-text" style={{ fontSize: 'clamp(1.25rem, 2vw, 1.6rem)' }}>
+            {card.metric}
+          </div>
+          <p className="leading-relaxed" style={{ color: '#6B6B7A', fontSize: 'clamp(0.8rem, 1.1vw, 0.95rem)' }}>
+            {card.detail}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ── Main component ── */
 const Clients = () => {
-  const [headerRef, headerVisible] = useReveal();
-  const [caseRef, caseVisible] = useReveal();
-  const [testimonialRef, testimonialVisible] = useReveal();
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const sectionRef  = useRef(null);
+  const headerRef   = useRef(null);
+  const [page, setPage]         = useState(0);
+  const [revealed, setRevealed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Auto-rotate testimonials
+  /* detect mobile — 1 card per page on <640px, 2 on larger */
   useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(timer);
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
   }, []);
 
-  // Duplicate brands for seamless marquee
+  const cardsPerPage = isMobile ? 1 : 2;
+  const totalPages   = Math.ceil(testimonials.length / cardsPerPage);
+
+  const goTo = (p) => setPage(Math.max(0, Math.min(p, totalPages - 1)));
+
+  /* reset page when layout changes */
+  useEffect(() => { setPage(0); }, [cardsPerPage]);
+
+  /* auto-advance every 5 s */
+  useEffect(() => {
+    const t = setInterval(() => setPage((prev) => (prev + 1) % totalPages), 5000);
+    return () => clearInterval(t);
+  }, [totalPages]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setRevealed(true); },
+      { threshold: 0.05 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   const marqueeItems = [...clientBrands, ...clientBrands];
 
   return (
-    <section id="clients" className="py-20 md:py-28 bg-white relative overflow-hidden">
-      <div className="blob w-80 h-80 bg-blue-200 top-20 -right-20 opacity-15" />
-      <div className="blob w-64 h-64 bg-purple-200 bottom-20 -left-10 opacity-15" />
+    <section id="clients" ref={sectionRef}
+      className="relative py-24 md:py-32 overflow-hidden" style={{ background: '#F8F7FF' }}>
+
+      <div className="absolute inset-0 dot-pattern opacity-40 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-px"
+        style={{ background: 'linear-gradient(90deg, transparent, rgba(83,16,91,0.25), transparent)' }} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div
-          ref={headerRef}
-          className={`text-center mb-16 transition-all duration-700 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-        >
-          <div className="inline-flex items-center gap-2 bg-green-50 border border-green-100 rounded-full px-4 py-1.5 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-600" />
-            <span className="text-sm font-semibold text-green-700 uppercase tracking-wider">Our Clients</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-4">
-            Brands That Trust Our{' '}
-            <span className="gradient-text">Digital Marketing Expertise</span>
+
+        {/* ── Section header ── */}
+        <div ref={headerRef} className={`text-center mb-16 reveal-up ${revealed ? 'visible' : ''}`}>
+          <h2 className="font-display font-black chrome-text mb-4 leading-tight"
+            style={{ fontSize: 'clamp(2rem, 4.5vw, 4.25rem)' }}>
+            150+ Brands That<br /><span className="purple-text">Trust Our Expertise</span>
           </h2>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            150+ brands across fashion, retail, wellness, and e-commerce trust us to grow their revenue.
+          <p className="max-w-2xl mx-auto" style={{ color: '#6B6B7A', fontSize: 'clamp(1rem, 1.4vw, 1.35rem)' }}>
+            From fashion to fintech, we've scaled brands across every industry.
           </p>
         </div>
 
-        {/* Marquee — Row 1 */}
-        <div className="mb-4 overflow-hidden marquee-wrapper">
-          <div className="ticker-move flex gap-6 items-center">
-            {marqueeItems.map((brand, i) => (
-              <div
-                key={`r1-${i}`}
-                className="flex-shrink-0 bg-white border border-gray-100 rounded-xl px-5 py-3 shadow-sm hover:shadow-card hover:border-blue-200 transition-all duration-300 cursor-default"
-              >
-                <span className="text-sm font-semibold text-gray-700 whitespace-nowrap">{brand}</span>
-              </div>
-            ))}
+        {/* ── Featured Results — responsive grid ── */}
+        <div className="mb-24">
+          <h3 className={`font-display font-bold chrome-text mb-8 reveal-up ${revealed ? 'visible' : ''}`}
+            style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2.2rem)', transitionDelay: '0.15s' }}>
+            Featured Results
+          </h3>
+          {/* Grid: 1 col mobile → 2 col sm → 3 col lg */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {projectCards.map((card, i) => <ResultCard key={i} card={card} />)}
           </div>
         </div>
 
-        {/* Marquee — Row 2 (reverse) */}
-        <div className="mb-16 overflow-hidden marquee-wrapper">
-          <div className="flex gap-6 items-center" style={{ animation: 'ticker 30s linear infinite reverse' }}>
-            {[...marqueeItems].reverse().map((brand, i) => (
-              <div
-                key={`r2-${i}`}
-                className="flex-shrink-0 bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-100/50 rounded-xl px-5 py-3 shadow-sm hover:shadow-card hover:border-blue-300 transition-all duration-300 cursor-default"
-              >
-                <span className="text-sm font-semibold text-gray-600 whitespace-nowrap">{brand}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* ── Testimonials slider ── */}
+        <div className={`reveal-up ${revealed ? 'visible' : ''}`} style={{ transitionDelay: '0.25s' }}>
+          <h3 className="font-display font-bold chrome-text mb-10 text-center"
+            style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2.2rem)' }}>
+            What Our Clients Say
+          </h3>
 
-        {/* Case Studies */}
-        {/* <div
-          ref={caseRef}
-          className={`mb-20 transition-all duration-700 ${caseVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-        >
-          <div className="flex items-center justify-between mb-8">
-            <h3 className="text-2xl font-black text-gray-900">Case Studies</h3>
-            <button className="text-sm font-semibold text-blue-600 hover:text-purple-600 transition-colors flex items-center gap-1">
-              View All Projects
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </button>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {caseStudies.map(({ brand, category, result, desc, barColor, icon }, i) => (
-              <div
-                key={brand}
-                className={`group relative bg-white rounded-2xl overflow-hidden border border-gray-100 card-lift transition-all duration-700 ${caseVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
-                style={{ transitionDelay: `${i * 100}ms` }}
-              >
-                <div className="h-2" style={{ background: barColor }} />
-                <div className="p-6">
-                  <div className="text-3xl mb-3">{icon}</div>
-                  <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">{category}</div>
-                  <h4 className="font-bold text-gray-900 mb-1">{brand}</h4>
-                  <div className="text-2xl font-black gradient-text mb-3">{result}</div>
-                  <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
-                  <button className="mt-4 text-xs font-semibold text-blue-600 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    Read Case Study
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div> */}
-
-        {/* Testimonials */}
-        <div ref={testimonialRef}>
-          <div className={`text-center mb-10 transition-all duration-700 ${testimonialVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-2">
-              Trusted by Top Brands:{' '}
-              <span className="gradient-text">What Our Partners Say</span>
-            </h3>
-            <p className="text-gray-500">Real results, real stories from real clients.</p>
-          </div>
-
-          {/* Featured testimonial */}
-          <div className={`transition-all duration-700 delay-200 ${testimonialVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <div className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 rounded-3xl p-8 md:p-12 border border-blue-100 overflow-hidden mb-8">
-              <div className="blob w-64 h-64 bg-blue-300 -top-10 -right-10 opacity-10" />
-              <div className="relative z-10">
-                <div className="flex flex-col md:flex-row gap-8 items-start">
-                  {/* Avatar */}
-                  <div className="flex-shrink-0">
-                    <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-white text-xl font-black shadow-lg" style={{ background: testimonials[activeTestimonial].avatarBg }}>
-                      {testimonials[activeTestimonial].avatar}
-                    </div>
-                  </div>
-                  {/* Content */}
-                  <div className="flex-1">
-                    <StarRating count={testimonials[activeTestimonial].rating} />
-                    <blockquote className="text-lg md:text-xl text-gray-700 font-medium leading-relaxed mt-4 mb-6">
-                      "{testimonials[activeTestimonial].text}"
-                    </blockquote>
-                    <div>
-                      <div className="font-bold text-gray-900">{testimonials[activeTestimonial].name}</div>
-                      <div className="text-sm text-gray-500">{testimonials[activeTestimonial].role}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Testimonial dots + mini cards */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-              {testimonials.map(({ name, role, avatar, avatarBg }, i) => (
-                <button
-                  key={name}
-                  onClick={() => setActiveTestimonial(i)}
-                  className={`p-3 rounded-xl border transition-all duration-300 text-left ${
-                    activeTestimonial === i
-                      ? 'border-blue-300 bg-blue-50 shadow-md'
-                      : 'border-gray-100 bg-white hover:border-blue-200 hover:bg-blue-50/30'
-                  }`}
+          {/* Clip window */}
+          <div style={{ overflow: 'hidden', borderRadius: '1rem' }}>
+            {/* Sliding track */}
+            <div
+              style={{
+                display: 'flex',
+                width: `${totalPages * 100}%`,
+                transform: `translateX(${(-page * 100) / totalPages}%)`,
+                transition: 'transform 0.55s cubic-bezier(0.4, 0, 0.2, 1)',
+              }}
+            >
+              {Array.from({ length: totalPages }).map((_, pageIdx) => (
+                <div
+                  key={pageIdx}
+                  style={{
+                    width: `${100 / totalPages}%`,
+                    display: 'flex',
+                    gap: '1.25rem',
+                    alignItems: 'stretch',
+                    padding: '0 2px 4px',
+                  }}
                 >
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold mb-2" style={{ background: avatarBg }}>
-                    {avatar}
-                  </div>
-                  <div className="text-xs font-bold text-gray-800 truncate">{name}</div>
-                  <div className="text-[10px] text-gray-400 truncate">{role}</div>
-                </button>
+                  {testimonials.slice(pageIdx * cardsPerPage, pageIdx * cardsPerPage + cardsPerPage).map((t) => (
+                    <div
+                      key={t.name}
+                      style={{
+                        flex: '1 1 0',
+                        minWidth: 0,
+                        background: '#ffffff',
+                        border: '1px solid rgba(83,16,91,0.14)',
+                        borderRadius: '1rem',
+                        boxShadow: '0 4px 24px rgba(83,16,91,0.07)',
+                        padding: 'clamp(1.25rem, 3vw, 1.75rem)',
+                        position: 'relative',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {/* top accent */}
+                      <div style={{
+                        position: 'absolute', top: 0, left: 0, right: 0, height: '2px',
+                        background: 'linear-gradient(90deg, #53105B, #8B1A9A, transparent)',
+                      }} />
+
+                      {/* quote mark */}
+                      <svg style={{ position: 'absolute', top: '1.25rem', right: '1.25rem', width: '2.5rem', height: '2.5rem', opacity: 0.07, color: '#53105B' }} fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                      </svg>
+
+                      {/* stars */}
+                      <div style={{ display: 'flex', gap: '0.25rem', marginBottom: '1rem' }}>
+                        {[...Array(5)].map((_, si) => (
+                          <svg key={si} style={{ width: '1rem', height: '1rem' }} fill="#8B1A9A" viewBox="0 0 24 24">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                          </svg>
+                        ))}
+                      </div>
+
+                      {/* quote text */}
+                      <blockquote style={{
+                        color: '#1A1A2E',
+                        fontSize: 'clamp(0.875rem, 1.2vw, 1.1rem)',
+                        lineHeight: 1.75,
+                        marginBottom: '1.5rem',
+                        fontWeight: 400,
+                      }}>
+                        "{t.text}"
+                      </blockquote>
+
+                      {/* author */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <div style={{
+                          width: '2.75rem', height: '2.75rem', borderRadius: '0.625rem',
+                          background: 'linear-gradient(135deg, #53105B, #8B1A9A)',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          fontWeight: 900, fontSize: 'clamp(0.7rem, 1vw, 0.85rem)', color: '#ffffff', flexShrink: 0,
+                        }}>
+                          {t.initials}
+                        </div>
+                        <div>
+                          <div style={{ fontWeight: 700, fontSize: 'clamp(0.85rem, 1.1vw, 1rem)', color: '#1A1A2E' }}>{t.name}</div>
+                          <div style={{ fontSize: 'clamp(0.75rem, 0.9vw, 0.85rem)', color: '#6B6B7A' }}>{t.role}</div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               ))}
             </div>
+          </div>
+
+          {/* ── Controls ── */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.25rem', marginTop: '2rem' }}>
+            <button
+              onClick={() => goTo(page - 1)}
+              disabled={page === 0}
+              style={{
+                width: '2.5rem', height: '2.5rem', borderRadius: '50%',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                background: page === 0 ? '#f0eef8' : '#ffffff',
+                border: '1.5px solid rgba(83,16,91,0.2)',
+                color: page === 0 ? '#b0a8c0' : '#53105B',
+                cursor: page === 0 ? 'not-allowed' : 'pointer',
+                boxShadow: page === 0 ? 'none' : '0 2px 10px rgba(83,16,91,0.1)',
+                transition: 'all 0.2s ease',
+              }}>
+              <svg style={{ width: '1rem', height: '1rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+            </button>
+
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <button key={i} onClick={() => goTo(i)}
+                  style={{
+                    borderRadius: '9999px',
+                    height: '8px',
+                    width: i === page ? '24px' : '8px',
+                    background: i === page ? '#8B1A9A' : 'rgba(83,16,91,0.2)',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    padding: 0,
+                  }} />
+              ))}
+            </div>
+
+            <button
+              onClick={() => goTo(page + 1)}
+              disabled={page === totalPages - 1}
+              style={{
+                width: '2.5rem', height: '2.5rem', borderRadius: '50%',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                background: page === totalPages - 1 ? '#f0eef8' : '#ffffff',
+                border: '1.5px solid rgba(83,16,91,0.2)',
+                color: page === totalPages - 1 ? '#b0a8c0' : '#53105B',
+                cursor: page === totalPages - 1 ? 'not-allowed' : 'pointer',
+                boxShadow: page === totalPages - 1 ? 'none' : '0 2px 10px rgba(83,16,91,0.1)',
+                transition: 'all 0.2s ease',
+              }}>
+              <svg style={{ width: '1rem', height: '1rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>

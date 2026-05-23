@@ -1,6 +1,8 @@
-# GrowthAgency — Performance Marketing Landing Page
+# Beyond The Obvious — Performance Marketing & Technology Agency
 
-A modern, high-converting landing page for a **360° Performance Marketing Agency**, built with React, Vite, and Tailwind CSS.
+A modern, high-performance agency website for **Beyond The Obvious** — a full-service agency offering Performance Marketing, Software & Technology Solutions, Growth Marketing, Branding & Creative, and Workforce Staffing.
+
+Built with **React 19**, **Vite 8**, **Tailwind CSS**, **GSAP**, and **Lenis** smooth scroll.
 
 ---
 
@@ -11,8 +13,9 @@ A modern, high-converting landing page for a **360° Performance Marketing Agenc
 | React | 19 | UI framework |
 | Vite | 8 | Build tool & dev server |
 | Tailwind CSS | 3 | Utility-first styling |
-| PostCSS | 8 | CSS processing |
-| Autoprefixer | 10 | CSS vendor prefixes |
+| GSAP + ScrollTrigger | 3.15 | Scroll animations & pinning |
+| Lenis | 1.3 | Smooth scroll engine |
+| PostCSS + Autoprefixer | 8 / 10 | CSS processing |
 
 ---
 
@@ -21,24 +24,34 @@ A modern, high-converting landing page for a **360° Performance Marketing Agenc
 ```
 performance-agency/
 ├── public/
+│   ├── fab-icon.png               # Browser favicon
+│   ├── favicon.svg
+│   └── icons.svg
 ├── src/
 │   ├── assets/
-│   │   └── PM-images.png          # Hero section image
+│   │   ├── main-logo.png          # Brand logo (full)
+│   │   ├── logo-s.png             # Brand logo (compact, used in Navbar)
+│   │   ├── hero.png               # Hero section image
+│   │   ├── about.png              # About section image
+│   │   ├── IT-about.jpg           # Software & Tech section image
+│   │   ├── PM-images.webp         # Performance marketing image
+│   │   └── fab-icon.png           # Favicon source
 │   ├── components/
-│   │   ├── Navbar.jsx             # Sticky nav with active section tracking
-│   │   ├── Hero.jsx               # Hero with animated counters & stats
-│   │   ├── Ticker.jsx             # Scrolling marquee ticker strip
-│   │   ├── About.jsx              # About us, why us cards, timeline
-│   │   ├── Services.jsx           # 8-service grid + 4-step process
-│   │   ├── Clients.jsx            # Logo marquee, case studies, testimonials
-│   │   ├── FAQ.jsx                # Accordion FAQ section
-│   │   ├── Partners.jsx           # Technology & media partner badges
-│   │   ├── Contact.jsx            # Contact form with validation
-│   │   └── Footer.jsx             # CTA banner + 4-column footer
-│   ├── App.jsx                    # Root component
-│   ├── index.css                  # Tailwind directives + custom utilities
+│   │   ├── Navbar.jsx             # Fixed nav with active section tracking & smooth scroll
+│   │   ├── Hero.jsx               # Full-screen hero with particle canvas & GSAP scroll-out
+│   │   ├── About.jsx              # Agency story, stats, and why-us section
+│   │   ├── Services.jsx           # Expandable service cards overview
+│   │   ├── SoftwareTech.jsx       # Software & Technology Solutions section
+│   │   ├── GrowthMarketing.jsx    # Growth Marketing — sticky left panel + scrolling items
+│   │   ├── BrandingCreative.jsx   # Branding & Creative Solutions section
+│   │   ├── WorkforceStaffing.jsx  # Workforce & Staffing Solutions section
+│   │   ├── Clients.jsx            # Client logos, results, and testimonials
+│   │   ├── Contact.jsx            # Contact form with validation & success state
+│   │   └── Footer.jsx             # Footer with links and social icons
+│   ├── App.jsx                    # Root component — Lenis + GSAP setup
+│   ├── index.css                  # Tailwind directives + all custom CSS
 │   └── main.jsx                   # React entry point
-├── index.html
+├── index.html                     # SEO meta tags, OG tags, Twitter card
 ├── tailwind.config.js
 ├── postcss.config.js
 ├── vite.config.js
@@ -49,28 +62,33 @@ performance-agency/
 
 ## ✨ Features
 
-- **Fully Responsive** — mobile (≥320px), tablet, and desktop layouts
-- **Scroll Animations** — `IntersectionObserver`-based reveal on every section
-- **Animated Counters** — numbers count up when scrolled into view
-- **Infinite Marquee** — dual-direction scrolling client logo strip (40+ brands)
-- **Testimonial Carousel** — auto-rotating with manual dot navigation
-- **Contact Form** — full validation, budget selector chips, success state
-- **Sticky Navbar** — active section highlighting + smooth scroll
-- **Glassmorphism & Glow Effects** — premium UI shadows and blur effects
-- **Gradient Borders & Buttons** — animated hover transitions
+- **Smooth Scroll** — Lenis smooth scroll engine bridged with GSAP ScrollTrigger
+- **Particle Canvas Hero** — animated particle network on full-screen hero
+- **GSAP Scroll Animations** — pinned hero, scroll-triggered reveals, stagger effects
+- **Sticky Left Panel** — Growth Marketing section with sticky left panel tracking active item
+- **Fully Responsive** — mobile (320px+), tablet, and desktop layouts
+- **Contact Form** — field validation, loading state, and success confirmation
+- **Active Nav Tracking** — navbar highlights current section on scroll
+- **SEO Optimized** — title, meta description, Open Graph, and Twitter Card tags
+- **Favicon** — custom brand favicon (`/fab-icon.png`)
+- **Gradient & Glow UI** — premium purple brand theme with glassmorphism effects
 
 ---
 
 ## 📄 Sections
 
-1. **Home** — Hero with image, stats, progress bars, CTA buttons
-2. **About Us** — Agency story, why-us cards, milestone timeline
-3. **Services** — Meta Ads, Google Ads, Amazon, SEO, Email, Social, Web Dev, Branding
-4. **Clients** — 40+ brand logos, case studies, testimonials
-5. **Contact Us** — Strategy call booking form
-6. **FAQ** — 8 common questions with accordion
-7. **Partners** — Technology & media partner badges
-8. **Footer** — CTA banner, links, social icons
+| # | Section | Description |
+|---|---|---|
+| 1 | **Hero** | Full-screen intro with particle animation and scroll-out effect |
+| 2 | **About** | Agency story, core values, and key stats |
+| 3 | **Services** | Overview of all service offerings with expandable cards |
+| 4 | **Software & Technology** | Custom software, web & app development solutions |
+| 5 | **Growth Marketing** | Performance campaigns, Google/Meta Ads, lead generation |
+| 6 | **Branding & Creative** | Brand identity, design, and creative strategy |
+| 7 | **Workforce Staffing** | Talent acquisition and staffing solutions |
+| 8 | **Clients** | Client logos, case study results, and testimonials |
+| 9 | **Contact** | Strategy call booking form |
+| 10 | **Footer** | Links, social icons, and brand info |
 
 ---
 
@@ -84,7 +102,7 @@ performance-agency/
 ### Install & Run
 
 ```bash
-# Clone or navigate to the project folder
+# Navigate to the project folder
 cd performance-agency
 
 # Install dependencies
@@ -112,49 +130,67 @@ npm run preview
 
 ---
 
-## 📱 Responsive Breakpoints
-
-| Breakpoint | Width | Behaviour |
-|---|---|---|
-| Mobile | < 485px | Single-column form fields, stacked layout |
-| Tablet | ≥ 640px | 2-column grids |
-| Desktop | ≥ 1024px | Full multi-column layout |
-
----
-
-## 🎨 Design Tokens
-
-| Token | Value |
-|---|---|
-| Primary Blue | `#2563eb` |
-| Primary Purple | `#7c3aed` |
-| Accent Cyan | `#06b6d4` |
-| Font | Inter (Google Fonts) |
-| Border Radius | `0.75rem` – `1.5rem` |
-
----
-
-## 📦 Scripts
+## � Scripts
 
 ```bash
-npm run dev       # Start dev server (localhost:5173)
+npm run dev       # Start dev server → localhost:5173
 npm run build     # Production build → dist/
-npm run preview   # Preview production build
+npm run preview   # Preview production build locally
 npm run lint      # Run ESLint
 ```
 
 ---
 
-## 📝 Notes
+## 🎨 Brand Design Tokens
 
-- All dynamic gradient classes use **inline styles** to ensure Tailwind's JIT scanner picks them up correctly.
-- The `min-[485px]:` breakpoint is used for the contact form to stack fields on screens ≤ 484px.
-- Images should be placed in `src/assets/` and imported directly in components for Vite to bundle and hash them.
+| Token | Value | Usage |
+|---|---|---|
+| Primary Purple | `#53105B` | Buttons, accents, borders |
+| Secondary Purple | `#8B1A9A` | Gradients, highlights |
+| Background | `#F8F7FF` | Page background |
+| Text Dark | `#1A1A2E` | Headings |
+| Text Silver | `#6B6B7A` | Body / subtext |
+| Font | System / Display | `font-display` class |
 
 ---
 
-## 📬 Contact Info (Demo)
+## 📱 Responsive Breakpoints
 
-- **Email:** info@growthagency.com
-- **Phone:** +91 9313961011
-- **Location:** Surat, Gujarat, India
+| Breakpoint | Width | Behaviour |
+|---|---|---|
+| Mobile | < 768px | Single-column, stacked layout, sticky disabled |
+| Tablet | 768px – 1024px | 2-column grids, reduced spacing |
+| Desktop | > 1024px | Full multi-column layout, sticky panels active |
+
+---
+
+## � SEO
+
+The `index.html` includes:
+
+- **Title** — `Beyond The Obvious | Performance Marketing, Software & Technology Solutions`
+- **Meta Description** — Service-focused, under 160 characters
+- **Meta Keywords** — Performance marketing, growth, software, IT, branding
+- **Open Graph** — For Facebook and LinkedIn share previews
+- **Twitter Card** — `summary_large_image` format
+- **Robots** — `index, follow`
+
+Update `og:url` in `index.html` with your live domain before deploying.
+
+---
+
+## 📝 Notes
+
+- All GSAP animations use `gsap.context()` for proper cleanup on unmount.
+- Lenis scroll is bridged to GSAP ticker via `lenis.on('scroll', ScrollTrigger.update)` — required for pinned sections to work correctly.
+- Favicon must be placed in `public/` folder (not `src/assets/`) for Vite to serve it at the root path.
+- Custom CSS classes (`.gm-*`, `.st-*`, `.bc-*`) are defined in `src/index.css` alongside Tailwind directives.
+
+---
+
+## 📬 Contact
+
+**Beyond The Obvious**
+- 🌐 Website: [beyondtheobvious.in](https://beyondtheobvious.in)
+- 📧 Email: info@beyondtheobvious.in
+- 📍 Location: India

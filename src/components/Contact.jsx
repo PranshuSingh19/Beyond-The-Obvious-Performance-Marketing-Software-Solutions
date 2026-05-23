@@ -1,83 +1,108 @@
 import { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const useReveal = (threshold = 0.1) => {
-  const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
+gsap.registerPlugin(ScrollTrigger);
+
+const PhoneIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+  </svg>
+);
+const MailIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+    <polyline points="22,6 12,13 2,6" />
+  </svg>
+);
+const MapPinIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" />
+  </svg>
+);
+const CheckIcon = () => (
+  <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+const ArrowRightIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+    <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+  </svg>
+);
+const SpinnerIcon = () => (
+  <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+  </svg>
+);
+const SuccessIcon = () => (
+  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+
+const DrawInput = ({ label, type = 'text', placeholder, value, onChange, error }) => {
+  const [focused, setFocused] = useState(false);
+  const lineRef = useRef(null);
+
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [threshold]);
-  return [ref, visible];
+    if (lineRef.current) {
+      lineRef.current.classList.toggle('drawn', focused || value);
+    }
+  }, [focused, value]);
+
+  return (
+    <div className="relative">
+      <label className="block text-xs font-semibold mb-2 tracking-wider uppercase"
+        style={{ color: focused ? '#1A1A2E' : '#6B6B7A', transition: 'color 0.3s' }}>
+        {label}
+      </label>
+      <div className="relative">
+        <input
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          className="input-dark w-full px-4 py-3 rounded-xl text-sm"
+          style={{
+            background: '#F8F7FF',
+            border: error ? '1px solid rgba(239,68,68,0.5)' : '1px solid rgba(83,16,91,0.15)',
+            color: '#1A1A2E',
+          }}
+        />
+      </div>
+      {error && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{error}</p>}
+    </div>
+  );
 };
 
-const services = [
-  'Meta Ads', 'Google Ads', 'Amazon Ads', 'SEO', 'Email Marketing',
-  'Social Media Marketing', 'Web Development', 'Shopify Development',
-  'Branding', 'E-Commerce Marketplace', 'Quick Commerce', 'Other',
-];
-
-const budgets = [
-  'Under ₹25,000/mo', '₹25K – ₹50K/mo', '₹50K – ₹1L/mo',
-  '₹1L – ₹2.5L/mo', '₹2.5L – ₹5L/mo', '₹5L+/mo',
-];
-
-const contactInfo = [
-  {
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-      </svg>
-    ),
-    label: 'Call Us',
-    value: '+91 888888888',
-    href: 'tel:+918888888',
-    color: 'from-blue-500 to-blue-700',
-  },
-  {
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-      </svg>
-    ),
-    label: 'Email Us',
-    value: 'info@agency.com',
-    href: 'mailto:info@agency.com',
-    color: 'from-purple-500 to-purple-700',
-  },
-  {
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    ),
-    label: 'Visit Us',
-    value: 'Vijay Nager, Indore, India',
-    href: '#',
-    color: 'from-cyan-500 to-blue-600',
-  },
-];
-
 const Contact = () => {
-  const [headerRef, headerVisible] = useReveal();
-  const [formRef, formVisible] = useReveal();
-
+  const sectionRef = useRef(null);
+  const [revealed, setRevealed] = useState(false);
   const [form, setForm] = useState({
-    firstName: '', lastName: '', email: '', phone: '',
-    website: '', service: '', company: '', budget: '', message: '',
+    name: '', email: '', phone: '', company: '', service: '', message: '',
   });
+  const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setRevealed(true); },
+      { threshold: 0.05 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+
 
   const validate = () => {
     const e = {};
-    if (!form.firstName.trim()) e.firstName = 'Required';
-    if (!form.lastName.trim()) e.lastName = 'Required';
+    if (!form.name.trim()) e.name = 'Required';
     if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) e.email = 'Valid email required';
     if (!form.phone.trim()) e.phone = 'Required';
     if (!form.service) e.service = 'Please select a service';
@@ -89,10 +114,7 @@ const Contact = () => {
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setSubmitted(true);
-    }, 1500);
+    setTimeout(() => { setLoading(false); setSubmitted(true); }, 1500);
   };
 
   const handleChange = (field, value) => {
@@ -100,276 +122,211 @@ const Contact = () => {
     if (errors[field]) setErrors((prev) => { const n = { ...prev }; delete n[field]; return n; });
   };
 
-  const inputClass = (field) =>
-    `w-full px-4 py-3 rounded-xl border text-sm font-medium text-gray-800 placeholder-gray-400 bg-white transition-all duration-200 outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 ${
-      errors[field] ? 'border-red-300 bg-red-50' : 'border-gray-200 hover:border-blue-300'
-    }`;
+  const services = [
+    'Custom Software Development', 'CRM & Automation', 'SaaS Development',
+    'ERP Solutions', 'AI & Automation', 'Performance Marketing',
+    'Google & Meta Ads', 'Social Media Marketing', 'Brand Strategy',
+    'Logo & Identity Design', 'IT Staffing', 'Other',
+  ];
+
+  const contactInfo = [
+    { icon: <PhoneIcon />, label: 'Call Us', value: '+91 888 888 8888', href: 'tel:+918888888888' },
+    { icon: <MailIcon />, label: 'Email Us', value: 'hello@beyondtheobvious.in', href: 'mailto:hello@beyondtheobvious.in' },
+    { icon: <MapPinIcon />, label: 'Visit Us', value: 'Vijay Nagar, Indore, India', href: '#' },
+  ];
 
   return (
-    <section id="contact" className="py-20 md:py-28 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
-      <div className="blob w-96 h-96 bg-blue-300 -top-20 -right-20 opacity-10" />
-      <div className="blob w-80 h-80 bg-purple-300 bottom-0 -left-20 opacity-10" />
+    <section
+      id="contact"
+      ref={sectionRef}
+      className="relative py-24 md:py-32 overflow-hidden"
+      style={{ background: '#ffffff' }}
+    >
+      <div className="absolute inset-0 grid-pattern opacity-60 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-px"
+        style={{ background: 'linear-gradient(90deg, transparent, rgba(83,16,91,0.3), transparent)' }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(83,16,91,0.05) 0%, transparent 70%)', filter: 'blur(60px)' }} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div
-          ref={headerRef}
-          className={`text-center mb-16 transition-all duration-700 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-        >
-          <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-full px-4 py-1.5 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
-            <span className="text-sm font-semibold text-blue-700 uppercase tracking-wider">Contact Us</span>
+        <div className={`text-center mb-16 reveal-up ${revealed ? 'visible' : ''}`}>
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="w-8 h-px" style={{ background: 'linear-gradient(90deg, transparent, #53105B)' }} />
+            <span className="text-xs font-semibold tracking-widest uppercase text-silver">Contact Us</span>
+            <div className="w-8 h-px" style={{ background: 'linear-gradient(90deg, #53105B, transparent)' }} />
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-4">
-            Book a Free{' '}
-            <span className="gradient-text">Strategy Call</span>
+          <h2 className="font-display font-black chrome-text mb-4 leading-tight" style={{ fontSize: 'clamp(1.6rem, 4vw, 4rem)' }}>
+            Let's Build Something<br />
+            <span className="purple-text">Extraordinary</span>
           </h2>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            Tell us about your business and goals. We'll craft a custom growth strategy — completely free.
+          <p className="text-silver text-lg max-w-2xl mx-auto">
+            Tell us about your vision. We'll craft a custom strategy — completely free.
           </p>
         </div>
 
-        <div
-          ref={formRef}
-          className={`grid lg:grid-cols-5 gap-10 transition-all duration-700 ${formVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-        >
-          {/* Left sidebar */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Contact cards */}
-            {contactInfo.map(({ icon, label, value, href, color }, i) => (
-              <a
-                key={label}
-                href={href}
-                className={`flex items-center gap-4 p-5 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-card-hover hover:border-blue-200 transition-all duration-300 card-lift group transition-all duration-700 ${formVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-6'}`}
-                style={{ transitionDelay: `${i * 100}ms` }}
+        {/* Main contact grid */}
+        <div className={`grid lg:grid-cols-5 gap-10 reveal-up ${revealed ? 'visible' : ''}`}
+          style={{ transitionDelay: '0.2s' }}>
+
+          {/* Left — info */}
+          <div className="lg:col-span-2 space-y-5">
+            {contactInfo.map(({ icon, label, value, href }) => (
+              <a key={label} href={href}
+                className="flex items-center gap-4 rounded-2xl p-5 group transition-all duration-300"
+                style={{ background: '#F8F7FF', border: '1px solid rgba(83,16,91,0.12)', boxShadow: '0 2px 10px rgba(83,16,91,0.06)' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(83,16,91,0.4)';
+                  e.currentTarget.style.boxShadow = '0 6px 24px rgba(83,16,91,0.12)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(83,16,91,0.12)';
+                  e.currentTarget.style.boxShadow = '0 2px 10px rgba(83,16,91,0.06)';
+                }}
               >
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center text-white shadow-md flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ background: 'rgba(83,16,91,0.08)', border: '1px solid rgba(83,16,91,0.2)', color: '#53105B' }}>
                   {icon}
                 </div>
                 <div>
-                  <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider">{label}</div>
-                  <div className="font-bold text-gray-900 mt-0.5">{value}</div>
+                  <div className="text-xs font-semibold tracking-wider uppercase text-silver mb-0.5">{label}</div>
+                  <div className="font-semibold chrome-text text-sm">{value}</div>
                 </div>
               </a>
             ))}
 
-            {/* Why contact us */}
-            <div className="bg-gradient-to-br from-blue-600 to-purple-700 rounded-2xl p-6 text-white">
-              <h4 className="font-bold text-lg mb-4">What You'll Get</h4>
+            {/* What you get */}
+            <div className="rounded-2xl p-6"
+              style={{
+                background: 'linear-gradient(135deg, rgba(83,16,91,0.06) 0%, #ffffff 100%)',
+                border: '1px solid rgba(83,16,91,0.2)',
+              }}>
+              <h4 className="font-semibold chrome-text mb-4 text-sm">What You'll Get</h4>
               <ul className="space-y-3">
                 {[
                   'Free 30-min strategy consultation',
-                  'Custom marketing roadmap',
+                  'Custom technology roadmap',
                   'Competitor analysis report',
                   'No commitment required',
                 ].map((item) => (
-                  <li key={item} className="flex items-center gap-2.5 text-sm">
-                    <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
+                  <li key={item} className="flex items-center gap-3 text-sm text-silver">
+                    <span className="w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0"
+                      style={{ background: 'linear-gradient(135deg, #53105B, #8B1A9A)' }}>
+                      <CheckIcon />
+                    </span>
                     {item}
                   </li>
                 ))}
               </ul>
             </div>
-
-            {/* Social links */}
-            {/* <div className="bg-white rounded-2xl border border-gray-100 p-5">
-              <div className="text-sm font-semibold text-gray-500 mb-3">Follow Us</div>
-              <div className="flex gap-3">
-                {[
-                  { name: 'Instagram', color: 'from-pink-500 to-purple-600' },
-                  { name: 'Facebook', color: 'from-blue-600 to-blue-800' },
-                  { name: 'LinkedIn', color: 'from-blue-500 to-blue-700' },
-                ].map(({ name, color }) => (
-                  <button
-                    key={name}
-                    className={`flex-1 py-2 rounded-xl bg-gradient-to-br ${color} text-white text-xs font-semibold hover:opacity-90 transition-opacity`}
-                  >
-                    {name}
-                  </button>
-                ))}
-              </div>
-            </div> */}
           </div>
 
           {/* Right — form */}
           <div className="lg:col-span-3">
-            <div className="bg-white rounded-3xl border border-gray-100 p-8 relative overflow-hidden">
-              {/* Top gradient line */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500" />
+            <div className="rounded-2xl overflow-hidden"
+              style={{ background: '#F8F7FF', border: '1px solid rgba(83,16,91,0.15)', boxShadow: '0 4px 24px rgba(83,16,91,0.08)' }}>
+              <div className="h-0.5" style={{ background: 'linear-gradient(90deg, #53105B, #8B1A9A, transparent)' }} />
 
               {submitted ? (
-                <div className="flex flex-col items-center justify-center py-16 text-center">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center mb-6 shadow-lg animate-float">
-                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                    </svg>
+                <div className="flex flex-col items-center justify-center py-20 text-center px-8">
+                  <div className="w-20 h-20 rounded-full flex items-center justify-center mb-6 float-anim"
+                    style={{ background: 'linear-gradient(135deg, #53105B, #8B1A9A)', boxShadow: '0 0 40px rgba(83,16,91,0.3)' }}>
+                    <SuccessIcon />
                   </div>
-                  <h3 className="text-2xl font-black text-gray-900 mb-2">You're All Set!</h3>
-                  <p className="text-gray-500 mb-6 max-w-sm">
-                    Thanks for reaching out! Our team will contact you within 24 hours to schedule your free strategy call.
+                  <h3 className="font-display font-black text-2xl chrome-text mb-2">You're All Set!</h3>
+                  <p className="text-silver mb-6 max-w-sm text-sm leading-relaxed">
+                    Our team will reach out within 24 hours to schedule your free strategy session.
                   </p>
                   <button
-                    onClick={() => { setSubmitted(false); setForm({ firstName: '', lastName: '', email: '', phone: '', website: '', service: '', company: '', budget: '', message: '' }); }}
-                    className="btn-primary px-6 py-3 rounded-xl text-sm font-semibold"
+                    onClick={() => { setSubmitted(false); setForm({ name: '', email: '', phone: '', company: '', service: '', message: '' }); }}
+                    className="px-6 py-3 rounded-xl text-sm font-semibold text-white"
+                    style={{ background: 'linear-gradient(135deg, #53105B, #8B1A9A)' }}
                   >
-                    <span>Submit Another Request</span>
+                    Submit Another Request
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} noValidate>
-                  <h3 className="text-xl font-black text-gray-900 mb-6">Get Your Free Strategy Call</h3>
+                <form onSubmit={handleSubmit} noValidate className="p-8">
+                  <h3 className="font-display font-bold text-xl chrome-text mb-8">
+                    Start a Conversation
+                  </h3>
 
-                  {/* Name row */}
-                  <div className="grid grid-cols-1 min-[485px]:grid-cols-2 gap-4 mb-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-gray-600 mb-1.5">First Name *</label>
-                      <input
-                        type="text"
-                        placeholder="John"
-                        value={form.firstName}
-                        onChange={(e) => handleChange('firstName', e.target.value)}
-                        className={inputClass('firstName')}
-                      />
-                      {errors.firstName && <p className="text-xs text-red-500 mt-1">{errors.firstName}</p>}
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-gray-600 mb-1.5">Last Name *</label>
-                      <input
-                        type="text"
-                        placeholder="Doe"
-                        value={form.lastName}
-                        onChange={(e) => handleChange('lastName', e.target.value)}
-                        className={inputClass('lastName')}
-                      />
-                      {errors.lastName && <p className="text-xs text-red-500 mt-1">{errors.lastName}</p>}
-                    </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                    <DrawInput label="Full Name *" placeholder="John Doe" value={form.name}
+                      onChange={(e) => handleChange('name', e.target.value)} error={errors.name} />
+                    <DrawInput label="Email Address *" type="email" placeholder="john@company.com" value={form.email}
+                      onChange={(e) => handleChange('email', e.target.value)} error={errors.email} />
                   </div>
 
-                  {/* Email + Phone */}
-                  <div className="grid grid-cols-1 min-[485px]:grid-cols-2 gap-4 mb-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-gray-600 mb-1.5">Email Address *</label>
-                      <input
-                        type="email"
-                        placeholder="john@company.com"
-                        value={form.email}
-                        onChange={(e) => handleChange('email', e.target.value)}
-                        className={inputClass('email')}
-                      />
-                      {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-gray-600 mb-1.5">Phone *</label>
-                      <input
-                        type="tel"
-                        placeholder="+91 58654 65789"
-                        value={form.phone}
-                        onChange={(e) => handleChange('phone', e.target.value)}
-                        className={inputClass('phone')}
-                      />
-                      {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
-                    </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                    <DrawInput label="Phone *" type="tel" placeholder="+91 98765 43210" value={form.phone}
+                      onChange={(e) => handleChange('phone', e.target.value)} error={errors.phone} />
+                    <DrawInput label="Company" placeholder="Your Company" value={form.company}
+                      onChange={(e) => handleChange('company', e.target.value)} />
                   </div>
 
-                  {/* Website + Company */}
-                  <div className="grid grid-cols-1 min-[485px]:grid-cols-2 gap-4 mb-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-gray-600 mb-1.5">Website</label>
-                      <input
-                        type="url"
-                        placeholder="https://example.com"
-                        value={form.website}
-                        onChange={(e) => handleChange('website', e.target.value)}
-                        className={inputClass('website')}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-gray-600 mb-1.5">Company Name</label>
-                      <input
-                        type="text"
-                        placeholder="Your Company"
-                        value={form.company}
-                        onChange={(e) => handleChange('company', e.target.value)}
-                        className={inputClass('company')}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Service */}
-                  <div className="mb-4">
-                    <label className="block text-xs font-semibold text-gray-600 mb-1.5">Service Interested In *</label>
+                  <div className="mb-5">
+                    <label className="block text-xs font-semibold mb-2 tracking-wider uppercase text-silver">
+                      Service Interested In *
+                    </label>
                     <select
                       value={form.service}
                       onChange={(e) => handleChange('service', e.target.value)}
-                      className={inputClass('service')}
+                      className="input-dark w-full px-4 py-3 rounded-xl text-sm"
+                      style={{
+                        background: '#F8F7FF',
+                        border: errors.service ? '1px solid rgba(239,68,68,0.5)' : '1px solid rgba(83,16,91,0.15)',
+                        color: form.service ? '#1A1A2E' : '#6B6B7A',
+                      }}
                     >
-                      <option value="">— Select Service —</option>
-                      {services.map((s) => <option key={s} value={s}>{s}</option>)}
-                    </select>
-                    {errors.service && <p className="text-xs text-red-500 mt-1">{errors.service}</p>}
-                  </div>
-
-                  {/* Budget */}
-                  <div className="mb-4">
-                    <label className="block text-xs font-semibold text-gray-600 mb-1.5">Monthly Budget</label>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                      {budgets.map((b) => (
-                        <button
-                          key={b}
-                          type="button"
-                          onClick={() => handleChange('budget', b)}
-                          className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-all duration-200 ${
-                            form.budget === b
-                              ? 'border-blue-500 bg-blue-50 text-blue-700'
-                              : 'border-gray-200 text-gray-600 hover:border-blue-300 hover:bg-blue-50/50'
-                          }`}
-                        >
-                          {b}
-                        </button>
+                      <option value="" style={{ background: '#F8F7FF' }}>— Select a Service —</option>
+                      {services.map((s) => (
+                        <option key={s} value={s} style={{ background: '#F8F7FF' }}>{s}</option>
                       ))}
-                    </div>
+                    </select>
+                    {errors.service && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{errors.service}</p>}
                   </div>
 
-                  {/* Message */}
-                  <div className="mb-6">
-                    <label className="block text-xs font-semibold text-gray-600 mb-1.5">Tell Us About Your Goals</label>
+                  <div className="mb-8">
+                    <label className="block text-xs font-semibold mb-2 tracking-wider uppercase text-silver">
+                      Tell Us About Your Goals
+                    </label>
                     <textarea
-                      rows={3}
-                      placeholder="Describe your business, current challenges, and what you want to achieve..."
+                      rows={4}
+                      placeholder="Describe your project, challenges, and what you want to achieve..."
                       value={form.message}
                       onChange={(e) => handleChange('message', e.target.value)}
-                      className={`${inputClass('message')} resize-none`}
+                      className="input-dark w-full px-4 py-3 rounded-xl text-sm resize-none"
+                      style={{
+                        background: '#F8F7FF',
+                        border: '1px solid rgba(83,16,91,0.15)',
+                        color: '#1A1A2E',
+                      }}
                     />
                   </div>
 
-                  {/* Submit */}
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full btn-primary py-4 rounded-xl text-base font-bold shadow-lg hover:shadow-glow-blue transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70"
-                  >
-                    {loading ? (
-                      <>
-                        <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                        </svg>
-                        <span>Submitting...</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>Schedule My Free Strategy Call →</span>
-                      </>
-                    )}
-                  </button>
+                  <div className="flex justify-center">
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="magnetic-btn relative w-full py-4 rounded-xl text-base font-bold text-white overflow-hidden group disabled:opacity-70"
+                      style={{
+                        background: 'linear-gradient(135deg, #53105B, #8B1A9A)',
+                      }}
+                      // onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 8px 40px rgba(83,16,91,0.5)'; }}
+                      // onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 4px 20px rgba(83,16,91,0.35)'; }}
+                    >
+                      <span className="relative z-10 flex items-center justify-center gap-2">
+                        {loading ? (<><SpinnerIcon />Sending...</>) : (<>Send Message<ArrowRightIcon /></>)}
+                      </span>
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        style={{ background: 'linear-gradient(135deg, #8B1A9A, #53105B)' }} />
+                    </button>
+                  </div>
 
-                  <p className="text-center text-xs text-gray-400 mt-3">
+                  {/* <p className="text-center text-xs text-silver mt-3">
                     No spam. No commitment. 100% free consultation.
-                  </p>
+                  </p> */}
                 </form>
               )}
             </div>
