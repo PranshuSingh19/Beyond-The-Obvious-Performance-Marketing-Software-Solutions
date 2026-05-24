@@ -10,11 +10,11 @@ const Footer = () => {
     { label: 'Home', id: 'home' },
     { label: 'About Us', id: 'about' },
     { label: 'Services', id: 'services' },
-    { label: 'Clients', id: 'clients' },
+    // { label: 'Clients', id: 'clients' },
     { label: 'Contact Us', id: 'contact' },
   ];
 
-  const growthLinks = [
+  const allServices = [
     'Performance Marketing',
     'Lead Generation & Customer Acquisition',
     'Social Media Marketing',
@@ -23,9 +23,6 @@ const Footer = () => {
     'Marketing Analytics',
     'Google & Meta Ads',
     'Brand Strategy & Identity',
-  ];
-
-  const webLinks = [
     'Custom Website Development',
     'AI & Intelligent Automation',
     'CRM & Business Automation',
@@ -135,7 +132,7 @@ const Footer = () => {
           </div>
 
           {/* Links columns — equal split of remaining space */}
-          <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-10">
+          <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-10">
 
             {/* Quick Links */}
             <div className="flex flex-col items-start text-left sm:items-center sm:text-center">
@@ -153,11 +150,11 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* Our Services */}
+            {/* Our Services — first half */}
             <div className="flex flex-col items-start text-left">
               <h4 className="font-semibold chrome-text text-xs uppercase tracking-widest mb-5">Our Services</h4>
               <ul className="space-y-3">
-                {growthLinks.map((s) => (
+                {allServices.slice(0, Math.ceil(allServices.length / 2)).map((s) => (
                   <li key={s}>
                     <button onClick={() => scrollTo('services')}
                       className="text-sm text-silver hover:text-chrome transition-colors duration-200 flex items-center gap-2 text-left">
@@ -169,11 +166,11 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* Software services */}
+            {/* Our Services — second half */}
             <div className="flex flex-col items-start text-left">
-              <h4 className="font-semibold chrome-text text-xs uppercase tracking-widest mb-5">Software Services</h4>
+              {/* <h4 className="font-semibold chrome-text text-xs uppercase tracking-widest mb-5 invisible">Our Services</h4> */}
               <ul className="space-y-3">
-                {webLinks.map((s) => (
+                {allServices.slice(Math.ceil(allServices.length / 2)).map((s) => (
                   <li key={s}>
                     <button onClick={() => scrollTo('services')}
                       className="text-sm text-silver hover:text-chrome transition-colors duration-200 flex items-center gap-2 text-left">

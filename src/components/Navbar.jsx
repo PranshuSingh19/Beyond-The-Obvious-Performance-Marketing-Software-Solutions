@@ -24,7 +24,7 @@ const Navbar = () => {
     { label: 'Home', href: 'home' },
     { label: 'About Us', href: 'about' },
     { label: 'Services', href: 'services' },
-    { label: 'Clients', href: 'clients' },
+    // { label: 'Clients', href: 'clients' },
     { label: 'Contact Us', href: 'contact' },
   ];
 

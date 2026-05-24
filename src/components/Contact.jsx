@@ -109,12 +109,38 @@ const Contact = () => {
     return e;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setLoading(true);
-    setTimeout(() => { setLoading(false); setSubmitted(true); }, 1500);
+
+    try {
+      const formData = new FormData();
+      formData.append("bb04377e-2553-44d9-9ae1-d343ed7cf176", "bb04377e-2553-44d9-9ae1-d343ed7cf176");
+      formData.append("name", form.name);
+      formData.append("email", form.email);
+      formData.append("phone", form.phone);
+      formData.append("company", form.company);
+      formData.append("service", form.service);
+      formData.append("message", form.message);
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitted(true);
+      } else {
+        setErrors({ submit: data.message || "Something went wrong. Please try again." });
+      }
+    } catch {
+      setErrors({ submit: "Network error. Please check your connection and try again." });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (field, value) => {
@@ -131,7 +157,7 @@ const Contact = () => {
 
   const contactInfo = [
     { icon: <PhoneIcon />, label: 'Call Us', value: '+91 9630916536', href: 'tel:+919630916536' },
-    { icon: <MailIcon />, label: 'Email Us', value: 'gopaal0107@gmail.com', href: 'mailto:gopaal0107@gmail.com' },
+    { icon: <MailIcon />, label: 'Email Us', value: 'frerlancerbrainindia@gmail.com', href: 'mailto:frerlancerbrainindia@gmail.com' },
     // { icon: <MapPinIcon />, label: 'Visit Us', value: 'Vijay Nagar, Indore, India', href: '#' },
   ];
 
@@ -305,7 +331,7 @@ const Contact = () => {
                     />
                   </div>
 
-                  <div className="flex justify-center">
+                  <div className="flex flex-col gap-3">
                     <button
                       type="submit"
                       disabled={loading}
@@ -313,8 +339,6 @@ const Contact = () => {
                       style={{
                         background: 'linear-gradient(135deg, #53105B, #8B1A9A)',
                       }}
-                      // onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 8px 40px rgba(83,16,91,0.5)'; }}
-                      // onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 4px 20px rgba(83,16,91,0.35)'; }}
                     >
                       <span className="relative z-10 flex items-center justify-center gap-2">
                         {loading ? (<><SpinnerIcon />Sending...</>) : (<>Send Message<ArrowRightIcon /></>)}
@@ -322,6 +346,9 @@ const Contact = () => {
                       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                         style={{ background: 'linear-gradient(135deg, #8B1A9A, #53105B)' }} />
                     </button>
+                    {errors.submit && (
+                      <p className="text-center text-sm" style={{ color: '#EF4444' }}>{errors.submit}</p>
+                    )}
                   </div>
 
                   {/* <p className="text-center text-xs text-silver mt-3">
