@@ -12,6 +12,7 @@ import GrowthMarketing from './components/GrowthMarketing';
 import BrandingCreative from './components/BrandingCreative';
 import WorkforceStaffing from './components/WorkforceStaffing';
 import Clients from './components/Clients';
+import Team from './components/Team';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
@@ -59,6 +60,7 @@ function App() {
       <main>
         <Hero />
         <About />
+        <Team />
         <Services />
         <SoftwareTech />
         <GrowthMarketing />

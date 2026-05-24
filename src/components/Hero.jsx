@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import homeBanner from '../assets/main-home-banner.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -114,14 +115,24 @@ const Hero = () => {
       id="home"
       ref={sectionRef}
       className="hero-section relative w-full h-screen flex items-center justify-center overflow-hidden"
-      style={{ background: '#F8F7FF' }}
+      style={{
+        backgroundImage: `url(${homeBanner})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+
     >
       <canvas ref={canvasRef} id="particle-canvas" className="absolute inset-0 w-full h-full" />
 
+      {/* Dark overlay so text is readable over the banner */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.50) 60%, rgba(0,0,0,0.70) 100%)' }} />
+
       {/* Soft radial glow */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 70% 55% at 50% 42%, rgba(83,16,91,0.07) 0%, transparent 70%)' }} />
-      <div className="absolute inset-0 grid-pattern pointer-events-none" style={{ opacity: 0.35 }} />
+        style={{ background: 'radial-gradient(ellipse 70% 55% at 50% 42%, rgba(139,26,154,0.18) 0%, transparent 70%)' }} />
+      <div className="absolute inset-0 grid-pattern pointer-events-none" style={{ opacity: 0.18 }} />
 
       {/* Orbs */}
       <div className="absolute top-1/4 left-1/5 w-[28rem] h-[28rem] rounded-full pointer-events-none hero-orb-left"
@@ -138,7 +149,7 @@ const Hero = () => {
             className="font-display font-black leading-[1.0] select-none"
             style={{
               fontSize: 'clamp(3.5rem, 11vw, 10rem)',
-              background: 'linear-gradient(135deg, #1A1A2E 0%, #2D2D3A 50%, #1A1A2E 100%)',
+              background: 'linear-gradient(135deg, #ffffff 0%, #e8e8f0 50%, #ffffff 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
@@ -163,11 +174,11 @@ const Hero = () => {
         {/* Tagline */}
         <div ref={taglineRef} className="mb-10">
           <p className="max-w-2xl mx-auto leading-relaxed px-2"
-            style={{ color: '#6B6B7A', fontSize: 'clamp(1.05rem, 1.8vw, 1.35rem)', fontWeight: 400 }}>
+            style={{ color: '#e0e0e8', fontSize: 'clamp(1.05rem, 1.8vw, 2.35rem)', fontWeight: 400 }}>
             We build{' '}
-            <span style={{ color: '#53105B', fontWeight: 600 }}>intelligent software</span>,{' '}
-            <span style={{ color: '#53105B', fontWeight: 600 }}>growth systems</span>, and{' '}
-            <span style={{ color: '#53105B', fontWeight: 600 }}>brand experiences</span>{' '}
+            <span style={{ color: '#d580e8', fontWeight: 600 }}>intelligent software</span>,{' '}
+            <span style={{ color: '#d580e8', fontWeight: 600 }}>growth systems</span>, and{' '}
+            <span style={{ color: '#d580e8', fontWeight: 600 }}>brand experiences</span>{' '}
             that push past the expected.
           </p>
         </div>
@@ -216,14 +227,16 @@ const Hero = () => {
               cursor: 'pointer',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(83,16,91,0.65)';
-              e.currentTarget.style.boxShadow = '0 6px 24px rgba(83,16,91,0.16)';
-              e.currentTarget.style.background = 'rgba(83,16,91,0.04)';
+              e.currentTarget.style.borderColor = '#53105ba6';
+              e.currentTarget.style.boxShadow = '0 6px 24px #53105b29';
+              e.currentTarget.style.background = '#871f93a6';
+              e.currentTarget.style.color = '#fff';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.borderColor = 'rgba(83,16,91,0.28)';
               e.currentTarget.style.boxShadow = '0 2px 12px rgba(83,16,91,0.08)';
               e.currentTarget.style.background = '#ffffff';
+              e.currentTarget.style.color = '#53105b';
             }}
           >
             Explore Services
@@ -231,8 +244,8 @@ const Hero = () => {
         </div>
 
         {/* Scroll hint */}
-        <div className="mt-14 flex flex-col items-center gap-2" style={{ opacity: 0.45 }}>
-          <span style={{ fontSize: '0.7rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#6B6B7A' }}>Scroll</span>
+        <div className="mt-14 flex flex-col items-center gap-2" style={{ opacity: 0.7 }}>
+          <span style={{ fontSize: '0.7rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#e0e0e8' }}>Scroll</span>
           <svg className="w-5 h-5 animate-bounce" style={{ color: '#53105B' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
             <polyline points="6 9 12 15 18 9" />
           </svg>

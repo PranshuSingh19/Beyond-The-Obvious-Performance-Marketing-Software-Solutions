@@ -481,7 +481,7 @@ body {
 .st-card-title  { font-size: 1.3rem; }
 .st-card-desc   { font-size: 0.9375rem; }
 .st-tag         { font-size: 0.6875rem; }
-.st-icon        { width: 3.5rem; height: 3.5rem; }
+.st-icon        { width: 6.25rem; height: 6.25rem; }
 .st-points      { grid-template-columns: repeat(2, 1fr); }
 
 /* 1024 */
@@ -490,7 +490,7 @@ body {
   .st-left-panel  { width: 160px; padding: 1.25rem 1.5rem; }
   .st-right-panel { padding: 1.25rem 1.5rem; }
   .st-card-title  { font-size: 1.15rem; }
-  .st-icon        { width: 3rem; height: 3rem; }
+  .st-icon        { width: 5rem; height: 5rem; }
 }
 
 /* 992 */
@@ -500,7 +500,7 @@ body {
   .st-right-panel { padding: 1rem 1.25rem; }
   .st-card-title  { font-size: 0.9375rem; }
   .st-card-desc   { font-size: 0.75rem; }
-  .st-icon        { width: 2.5rem; height: 2.5rem; }
+  .st-icon        { width: 4rem; height: 4rem; }
 }
 
 /* 768 */
@@ -510,7 +510,7 @@ body {
   .st-right-panel { padding: 0.875rem 1rem; }
   .st-card-title  { font-size: 0.875rem; }
   .st-card-desc   { font-size: 0.7rem; margin-bottom: 0.5rem; }
-  .st-icon        { width: 2rem; height: 2rem; }
+  .st-icon        { width: 3rem; height: 3rem; }
   .st-tag         { font-size: 0.5rem; padding: 0.2rem 0.5rem; }
   .st-points      { grid-template-columns: 1fr; }
   .st-header      { padding-top: 1.5rem; }
@@ -523,7 +523,7 @@ body {
   .st-right-panel { padding: 0.75rem 0.875rem; }
   .st-card-title  { font-size: 0.8rem; }
   .st-card-desc   { font-size: 0.65rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .st-icon        { width: 1.75rem; height: 1.75rem; }
+  .st-icon        { width: 2.5rem; height: 2.5rem; }
   .st-tag         { display: none; }
   .st-points li   { font-size: 0.65rem; }
 }

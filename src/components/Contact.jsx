@@ -130,9 +130,9 @@ const Contact = () => {
   ];
 
   const contactInfo = [
-    { icon: <PhoneIcon />, label: 'Call Us', value: '+91 888 888 8888', href: 'tel:+918888888888' },
-    { icon: <MailIcon />, label: 'Email Us', value: 'hello@beyondtheobvious.in', href: 'mailto:hello@beyondtheobvious.in' },
-    { icon: <MapPinIcon />, label: 'Visit Us', value: 'Vijay Nagar, Indore, India', href: '#' },
+    { icon: <PhoneIcon />, label: 'Call Us', value: '+91 9630916536', href: 'tel:+919630916536' },
+    { icon: <MailIcon />, label: 'Email Us', value: 'gopaal0107@gmail.com', href: 'mailto:gopaal0107@gmail.com' },
+    // { icon: <MapPinIcon />, label: 'Visit Us', value: 'Vijay Nagar, Indore, India', href: '#' },
   ];
 
   return (
