@@ -7,9 +7,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
   { value: '150+', label: 'Brands Scaled' },
-  { value: '8+',   label: 'Years Experience' },
+  { value: '20+',   label: 'Years Experience' },
   { value: '98%',  label: 'Client Retention' },
-  { value: '5x',   label: 'Avg. ROAS' },
+  { value: '55x',   label: 'Avg. ROAS' },
 ];
 
 const pillars = [
