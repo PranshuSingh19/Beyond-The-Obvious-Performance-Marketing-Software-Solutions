@@ -116,8 +116,11 @@ const Contact = () => {
     setLoading(true);
 
     try {
+      const subject = `[Freelancer's Brain] ${form.name} is interested in ${form.service || 'our services'} — New Inquiry`;
+
       const formData = new FormData();
-      formData.append("bb04377e-2553-44d9-9ae1-d343ed7cf176", "bb04377e-2553-44d9-9ae1-d343ed7cf176");
+      formData.append("access_key", "bb04377e-2553-44d9-9ae1-d343ed7cf176");
+      formData.append("subject", subject);
       formData.append("name", form.name);
       formData.append("email", form.email);
       formData.append("phone", form.phone);
@@ -256,7 +259,8 @@ const Contact = () => {
               {submitted ? (
                 <div className="flex flex-col items-center justify-center py-20 text-center px-8">
                   <div className="w-20 h-20 rounded-full flex items-center justify-center mb-6 float-anim"
-                    style={{ background: 'linear-gradient(135deg, #53105B, #8B1A9A)', boxShadow: '0 0 40px rgba(83,16,91,0.3)' }}>
+                    style={{ background: '#00c231ff'}}>
+                    {/* style={{ background: 'linear-gradient(135deg, #53105B, #8B1A9A)', boxShadow: '0 0 40px rgba(83,16,91,0.3)' }} */}
                     <SuccessIcon />
                   </div>
                   <h3 className="font-display font-black text-2xl chrome-text mb-2">You're All Set!</h3>
