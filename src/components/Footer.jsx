@@ -54,7 +54,7 @@ const Footer = () => {
             <span className="text-xs font-semibold text-silver tracking-wider">Now Accepting New Clients</span>
           </div>
           <h3 className="font-display font-black text-2xl md:text-4xl chrome-text mb-3">
-            Ready to Go Beyond the Obvious?
+            Ready to Work with Freelancer's Brain?
           </h3>
           <p className="text-silver mb-8 max-w-xl mx-auto">
             Join 150+ brands that trust us to build, grow, and transform their business.
@@ -109,7 +109,7 @@ const Footer = () => {
             <button onClick={() => scrollTo('home')} className="flex items-center justify-center mb-5 group">
               <img
                 src={logoImg}
-                alt="Beyond The Obvious"
+                alt="Freelancer's Brain"
                 className="h-40 w-auto object-contain"
               />
             </button>
@@ -193,7 +193,7 @@ const Footer = () => {
       <div style={{ borderTop: '1px solid rgba(83,16,91,0.08)' }}>
         <div className="w-full text-center m-auto px-4 sm:px-6 lg:px-8 py-5  items-center justify-between gap-3">
           <p className="text-xs text-silver">
-            © {new Date().getFullYear()} Beyond The Obvious. All Rights Reserved.
+            © {new Date().getFullYear()} Freelancer's Brain. All Rights Reserved.
           </p>
         </div>
       </div>

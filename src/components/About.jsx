@@ -144,7 +144,7 @@ const About = () => {
                 style={{ border: '1px solid rgba(83,16,91,0.25)' }}>
                 <img
                   src={aboutImg}
-                  alt="Beyond The Obvious — Technology & Growth Agency"
+                  alt="Freelancer's Brain — Technology & Growth Agency"
                   className="about-img w-full h-full object-cover"
                 />
                 {/* Overlay gradient */}
@@ -199,7 +199,7 @@ const About = () => {
             {/* Description */}
             <p className="about-desc text-silver leading-relaxed mb-6"
               style={{ fontSize: 'clamp(0.875rem, 1.3vw, 1.125rem)' }}>
-              <strong className="text-chrome font-semibold">Beyond The Obvious</strong> is a full-spectrum technology and growth company built for businesses that refuse to settle. From custom software and AI-powered automation to performance marketing and brand strategy, we engineer outcomes that matter.
+              <strong className="text-chrome font-semibold">Freelancer's Brain</strong> is a full-spectrum technology and growth company built for businesses that refuse to settle. From custom software and AI-powered automation to performance marketing and brand strategy, we engineer outcomes that matter.
             </p>
             <p className="about-desc text-silver leading-relaxed mb-8"
               style={{ fontSize: 'clamp(0.875rem, 1.3vw, 1.125rem)' }}>

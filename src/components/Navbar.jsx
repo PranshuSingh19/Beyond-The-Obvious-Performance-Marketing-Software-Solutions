@@ -44,7 +44,7 @@ const Navbar = () => {
           <button onClick={() => scrollTo('home')} className="flex items-center gap-3 group">
             <img
               src={logoImg}
-              alt="Beyond The Obvious"
+              alt="Freelancer's Brain"
               className="h-12 sm:h-20 w-auto object-contain"
             />
           </button>

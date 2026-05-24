@@ -27,7 +27,7 @@ const teamMembers = [
   {
     name: 'Pranshu Singh',
     role: 'Full Stack Developer',
-    bio: 'Technology professional with 4+ years of experience in web development, application development, and digital solutions.',
+    bio: 'Software Engineer with 4+ years of experience building scalable web applications and delivering high-quality digital solutions.',
     linkedin: 'www.linkedin.com/in/pranshu-singh24/',
     photo: 'https://media.licdn.com/dms/image/v2/D4D03AQEq98MMO6uCdA/profile-displayphoto-scale_200_200/B4DZlQvikfG8AY-/0/1757996265937?e=1781136000&v=beta&t=rlMsIdu0cxI1quNINmxGfnzk3IemiKttjR0i5stoZdw',
   },
@@ -287,7 +287,7 @@ const Team = () => {
             style={{ fontSize: 'clamp(2rem, 4.5vw, 4.25rem)' }}
           >
             The People Behind<br />
-            <span className="purple-text">Beyond The Obvious</span>
+            <span className="purple-text">Freelancer's Brain</span>
           </h2>
           <p className="max-w-2xl mx-auto text-silver"
             style={{ fontSize: 'clamp(1rem, 1.4vw, 1.2rem)', lineHeight: 1.7 }}>
