@@ -7,6 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 const services = [
   {
     id: 'software',
+    sectionId: 'software-tech',
     title: 'Software & Technology Solutions',
     subtitle: 'Custom Development · SaaS · ERP · AI',
     color: 'rgba(83,16,91,0.06)',
@@ -27,6 +28,7 @@ const services = [
   },
   {
     id: 'marketing',
+    sectionId: 'growth-marketing',
     title: 'Growth Marketing Solutions',
     subtitle: 'Performance · Lead Gen · Google · Meta',
     color: 'rgba(83,16,91,0.06)',
@@ -49,6 +51,7 @@ const services = [
   },
   {
     id: 'branding',
+    sectionId: 'branding-creative',
     title: 'Branding & Creative Solutions',
     subtitle: 'Brand Strategy · Visual Design · Identity',
     color: 'rgba(83,16,91,0.06)',
@@ -69,6 +72,7 @@ const services = [
   },
   {
     id: 'workforce',
+    sectionId: 'workforce-staffing',
     title: 'Workforce & IT Staffing Solutions',
     subtitle: 'Back Office · Field Support · On-Demand IT',
     color: 'rgba(83,16,91,0.06)',
@@ -105,8 +109,7 @@ const ChevronRight = ({ color }) => (
   </svg>
 );
 
-const ServiceCard = ({ service }) => {
-  const [expanded, setExpanded] = useState(false);
+const ServiceCard = ({ service }) => {  const [expanded, setExpanded] = useState(false);
 
   return (
     <div
@@ -163,7 +166,7 @@ const ServiceCard = ({ service }) => {
           <button
             className="mt-5 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all duration-300 flex items-center gap-2 text-white"
             style={{ background: `linear-gradient(135deg, #53105B, #8B1A9A)`, border: `1px solid ${service.accent}` }}
-            onClick={(e) => { e.stopPropagation(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
+            onClick={(e) => { e.stopPropagation(); document.getElementById(service.sectionId)?.scrollIntoView({ behavior: 'smooth' }); }}
           >
             Discuss This Service
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
@@ -216,7 +219,7 @@ const Services = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{ background: 'radial-gradient(circle, rgba(83,16,91,0.05) 0%, transparent 70%)', filter: 'blur(60px)' }} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         {/* Header */}
         <div ref={headerRef} className="text-center mb-10 md:mb-14 lg:mb-16">
           <div className="flex items-center justify-center gap-3 mb-5">

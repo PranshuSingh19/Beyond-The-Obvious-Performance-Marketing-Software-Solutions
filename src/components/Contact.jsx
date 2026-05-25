@@ -177,7 +177,7 @@ const Contact = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{ background: 'radial-gradient(circle, rgba(83,16,91,0.05) 0%, transparent 70%)', filter: 'blur(60px)' }} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         {/* Header */}
         <div className={`text-center mb-16 reveal-up ${revealed ? 'visible' : ''}`}>
           <div className="flex items-center justify-center gap-3 mb-6">

@@ -95,6 +95,7 @@ const GrowthMarketing = () => {
 
   return (
     <section
+      id="growth-marketing"
       ref={sectionRef}
       className="gm-section relative"
       style={{ background: '#ffffff', paddingTop: 'clamp(3rem, 6vw, 8rem)', paddingBottom: 'clamp(3rem, 6vw, 8rem)' }}
@@ -105,7 +106,7 @@ const GrowthMarketing = () => {
       <div className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse 50% 60% at 15% 50%,rgba(83,16,91,.05) 0%,transparent 70%)' }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 site-container">
         <div className="gm-layout">
 
           {/* ── LEFT sticky panel ── */}

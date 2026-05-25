@@ -373,6 +373,25 @@ body {
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
+/* ─── Site Container — max 1300px, 20px padding ─────────────── */
+.site-container {
+  width: 100%;
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.site-container-team{
+  width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 /* ═══════════════════════════════════════════════════════════════
    RESPONSIVE BREAKPOINTS  —  1024 / 992 / 768 / 400
    ═══════════════════════════════════════════════════════════════ */
@@ -759,4 +778,61 @@ body {
   /* CTA buttons full-width */
   .about-content-col .flex.flex-wrap { flex-direction: column; }
   .about-content-col .flex.flex-wrap button { width: 100%; justify-content: center; }
+}
+
+/* ── Team grid — 5 cols desktop, responsive below ── */
+.team-grid {
+  grid-template-columns: repeat(5, 1fr) !important;
+}
+@media (max-width: 1280px) {
+  .team-grid { grid-template-columns: repeat(3, 1fr) !important; }
+}
+@media (max-width: 768px) {
+  .team-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+@media (max-width: 480px) {
+  .team-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ── Hero banner — overlay & mobile fixes ── */
+
+/* Desktop — very subtle overlay, image shows clearly */
+/* .hero-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(248, 247, 255, 0.12) 0%,
+    rgba(83, 16, 91, 0.06) 100%
+  );
+} */
+
+/* Mobile — no pin/scroll animation, image shows fully */
+@media (max-width: 768px) {
+  /* Lighter overlay so bg image is visible */
+  /* .hero-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.45) 0%,
+      rgba(240, 232, 255, 0.35) 60%,
+      rgba(83, 16, 91, 0.12) 100%
+    );
+  } */
+
+  /* Frosted glass card behind content */
+  .hero-content-box {
+    background: rgba(255, 255, 255, 0.60);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 1.25rem;
+    padding: 1.75rem 1.5rem;
+    border: 1px solid rgba(83, 16, 91, 0.14);
+    box-shadow: 0 8px 32px rgba(83, 16, 91, 0.12);
+  }
+
+  .hero-heading-main {
+    color: #1a0a1e !important;
+  }
+
+  .hero-tagline {
+    color: #3a1a42 !important;
+  }
 }

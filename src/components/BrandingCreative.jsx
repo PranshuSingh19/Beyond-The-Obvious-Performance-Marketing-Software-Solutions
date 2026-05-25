@@ -78,6 +78,7 @@ const BrandingCreative = () => {
 
   return (
     <section
+      id="branding-creative"
       ref={sectionRef}
       className="bc-section relative overflow-hidden"
       style={{ background: '#F8F7FF', paddingTop: 'clamp(3rem, 6vw, 8rem)', paddingBottom: 'clamp(3rem, 6vw, 8rem)' }}
@@ -99,7 +100,7 @@ const BrandingCreative = () => {
           style={{ background: 'radial-gradient(circle,rgba(83,16,91,.08) 0%,transparent 70%)', filter: 'blur(20px)' }} />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 site-container">
 
         {/* Header */}
         <div ref={headerRef} className="text-center mb-10 md:mb-14 lg:mb-16">
