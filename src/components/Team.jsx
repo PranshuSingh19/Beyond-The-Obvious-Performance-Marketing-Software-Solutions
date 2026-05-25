@@ -271,7 +271,7 @@ const Team = () => {
           background: 'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(83,16,91,0.06) 0%, transparent 60%)',
         }} />
 
-      <div className="relative z-10  mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 site-container-team">
 
         {/* Section label */}
         <div className="flex items-center gap-3 mb-12">
@@ -296,10 +296,10 @@ const Team = () => {
         </div>
 
         {/* Grid */}
-        <div style={{
+        <div className="team-grid" style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 240px), 1fr))',
-          gap: 'clamp(1rem, 2vw, 1.5rem)',
+          gridTemplateColumns: 'repeat(5, 1fr)',
+          gap: 'clamp(0.75rem, 1.5vw, 1.25rem)',
         }}>
           {teamMembers.map((member, i) => (
             <TeamCard key={member.name} member={member} index={i} revealed={revealed} />

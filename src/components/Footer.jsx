@@ -96,7 +96,7 @@ const Footer = () => {
       </div>
 
       {/* Main footer */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" style={{ borderTop: '1px solid rgba(83,16,91,0.1)' }}>
+      <div className="site-container py-16" style={{ borderTop: '1px solid rgba(83,16,91,0.1)' }}>
         <div className="flex flex-col lg:flex-row gap-10">
 
           {/* Brand column — right border on desktop, bottom border on mobile */}
@@ -188,7 +188,7 @@ const Footer = () => {
 
       {/* Bottom bar */}
       <div style={{ borderTop: '1px solid rgba(83,16,91,0.08)' }}>
-        <div className="w-full text-center m-auto px-4 sm:px-6 lg:px-8 py-5  items-center justify-between gap-3">
+        <div className="site-container py-5 text-center items-center justify-between gap-3">
           <p className="text-xs text-silver">
             © {new Date().getFullYear()} Freelancer's Brain. All Rights Reserved.
           </p>

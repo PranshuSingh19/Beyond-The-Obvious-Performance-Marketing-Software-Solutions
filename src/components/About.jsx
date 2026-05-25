@@ -114,7 +114,7 @@ const About = () => {
       <div className="absolute bottom-0 left-0 w-1/2 h-1/2 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse 60% 60% at 0% 100%, rgba(83,16,91,0.04) 0%, transparent 70%)' }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 site-container">
 
         {/* Section label */}
         <div className="flex items-center gap-3 mb-12 about-label">

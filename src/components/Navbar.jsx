@@ -37,7 +37,7 @@ const Navbar = () => {
   return (
     // <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass-nav shadow-glow-purple-sm' : 'bg-transparent'}`}>
     <nav className="relative top-0 left-0 right-0 z-50 transition-all duration-500" style={{ background: '#F8F7FF', borderBottom: '1px solid rgba(83,16,91,0.1)' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <div className="flex items-center justify-between h-16 md:h-24">
 
           {/* Logo */}

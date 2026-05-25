@@ -137,7 +137,7 @@ const WorkforceStaffing = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-24 md:py-32 overflow-hidden"
+    <section id="workforce-staffing" ref={sectionRef} className="relative py-24 md:py-32 overflow-hidden"
       style={{ background: '#ffffff' }}>
 
       {/* Background */}
@@ -156,7 +156,7 @@ const WorkforceStaffing = () => {
         </span>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 site-container">
 
         {/* Header */}
         <div ref={headerRef} className="text-center mb-20">

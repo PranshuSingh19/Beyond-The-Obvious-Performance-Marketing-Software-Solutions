@@ -145,7 +145,7 @@ const Clients = () => {
       <div className="absolute top-0 left-0 w-full h-px"
         style={{ background: 'linear-gradient(90deg, transparent, rgba(83,16,91,0.25), transparent)' }} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
 
         {/* ── Section header ── */}
         <div ref={headerRef} className={`text-center mb-16 reveal-up ${revealed ? 'visible' : ''}`}>

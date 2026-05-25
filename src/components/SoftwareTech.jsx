@@ -300,7 +300,7 @@ export default function SoftwareTech() {
   }, []);
 
   return (
-    <section className="st-section" style={{ background: '#F8F7FF' }}>
+    <section id="software-tech" className="st-section" style={{ background: '#F8F7FF' }}>
       <div className="h-px w-full"
         style={{ background: 'linear-gradient(90deg,transparent,rgba(83,16,91,.4),transparent)' }} />
 
@@ -315,7 +315,8 @@ export default function SoftwareTech() {
           <div className="absolute inset-0 pointer-events-none"
             style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(83,16,91,.06) 0%, transparent 70%)' }} />
 
-          <div className="relative z-10 h-full flex flex-col st-container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* <div className="relative z-10 h-full flex flex-col st-container site-container"> */}
+          <div className="relative z-10 max-w-7xl mx-auto h-full flex flex-col st-container">
 
             {/* Header */}
             <div className="st-header pt-10 pb-4 text-center flex-shrink-0">
@@ -335,7 +336,7 @@ export default function SoftwareTech() {
             </div>
 
             {/* Card stack container */}
-            <div className="flex-1 relative overflow-hidden">
+            <div className="flex-1 relative overflow-hidden max-w-[55rem] mx-auto w-full">
               {CARDS.map((card, i) => (
                 <div
                   key={card.tag}
