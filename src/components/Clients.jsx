@@ -150,7 +150,7 @@ const Clients = () => {
         {/* ── Section header ── */}
         <div ref={headerRef} className={`text-center mb-16 reveal-up ${revealed ? 'visible' : ''}`}>
           <h2 className="font-display font-black chrome-text mb-4 leading-tight"
-            style={{ fontSize: 'clamp(2rem, 4.5vw, 4.25rem)' }}>
+            style={{ fontSize: 'clamp(1.6rem, 4vw, 4rem)' }}>
             150+ Brands That<br /><span className="purple-text">Trust Our Expertise</span>
           </h2>
           <p className="max-w-2xl mx-auto" style={{ color: '#6B6B7A', fontSize: 'clamp(1rem, 1.4vw, 1.35rem)' }}>

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -15,12 +16,15 @@ import Clients from './components/Clients';
 import Team from './components/Team';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Careers from './components/Careers';
+import JobDetail from './components/JobDetail';
+import CareersNavbar from './components/CareersNavbar';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function App() {
+// ── Main (home) page with Lenis smooth scroll ─────────────────
+function HomePage() {
   useEffect(() => {
-    // ── Lenis instance ────────────────────────────────────────
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -30,22 +34,13 @@ function App() {
       touchMultiplier: 2,
     });
 
-    // ── Bridge: Lenis scroll → ScrollTrigger update ───────────
-    // Without this, ScrollTrigger reads native scroll position
-    // while Lenis controls the actual scroll — pins never fire.
     lenis.on('scroll', ScrollTrigger.update);
 
-    // ── Drive Lenis inside GSAP ticker ────────────────────────
-    // Named function so we can remove it cleanly on unmount
     function onTick(time) {
-      lenis.raf(time * 1000); // GSAP time = seconds, Lenis expects ms
+      lenis.raf(time * 1000);
     }
     gsap.ticker.add(onTick);
-
-    // Prevent GSAP lag-smoothing from fighting Lenis timing
     gsap.ticker.lagSmoothing(0);
-
-    // Tell ScrollTrigger not to touch native scroll behaviour
     ScrollTrigger.normalizeScroll(false);
 
     return () => {
@@ -71,6 +66,40 @@ function App() {
       </main>
       <Footer />
     </div>
+  );
+}
+
+// ── Careers layout wrapper ────────────────────────────────────
+function CareersLayout({ children }) {
+  return (
+    <div className="min-h-screen" style={{ background: '#F8F7FF' }}>
+      <CareersNavbar />
+      {children}
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route
+        path="/careers"
+        element={
+          <CareersLayout>
+            <Careers />
+          </CareersLayout>
+        }
+      />
+      <Route
+        path="/careers/:id"
+        element={
+          <CareersLayout>
+            <JobDetail />
+          </CareersLayout>
+        }
+      />
+    </Routes>
   );
 }
 

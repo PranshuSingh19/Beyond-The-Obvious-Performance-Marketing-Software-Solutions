@@ -119,7 +119,7 @@ const GrowthMarketing = () => {
               </div>
 
               <h2 className="gm-heading font-display font-black chrome-text leading-tight"
-                style={{ fontSize: 'clamp(1.6rem, 3.5vw, 3.5rem)' }}>
+                style={{ fontSize: 'clamp(1.6rem, 4vw, 4rem)' }}>
                 Growth Marketing<br /><span className="purple-text">Solutions</span>
               </h2>
               <p className="gm-subtext text-silver leading-relaxed"

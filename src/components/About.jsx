@@ -191,7 +191,7 @@ const About = () => {
 
             {/* Heading */}
             <h2 className="about-heading font-display font-black chrome-text leading-tight mb-5"
-              style={{ fontSize: 'clamp(1.75rem, 3.5vw, 3.75rem)' }}>
+              style={{ fontSize: 'clamp(1.6rem, 4vw, 4rem)' }}>
               We Build What Others<br />
               <span className="purple-text">Can't Imagine</span>
             </h2>

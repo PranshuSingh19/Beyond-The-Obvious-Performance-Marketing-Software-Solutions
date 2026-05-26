@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import logoImg from '../assets/brand-logo.png';
 
 const Navbar = () => {
@@ -55,7 +56,7 @@ const Navbar = () => {
               const isActive = activeSection === href;
               return (
                 <button key={href} onClick={() => scrollTo(href)}
-                  className="relative px-4 py-2 font-medium rounded-lg transition-all duration-300"
+                  className="relative px-4 py-2 rounded-lg transition-all duration-300"
                   style={{ color: isActive ? '#53105B' : '#6B6B7A', fontSize: '1rem' }}>
                   {label}
                   {isActive && (
@@ -65,6 +66,15 @@ const Navbar = () => {
                 </button>
               );
             })}
+            <Link
+              to="/careers"
+              className="relative px-4 py-2 rounded-lg transition-all duration-300"
+              style={{ color: '#6B6B7A', fontSize: '1rem', textDecoration: 'none' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = '#53105B')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = '#6B6B7A')}
+            >
+              Careers
+            </Link>
           </div>
 
           {/* CTA */}
@@ -108,6 +118,14 @@ const Navbar = () => {
               {label}
             </button>
           ))}
+          <Link
+            to="/careers"
+            onClick={() => setMenuOpen(false)}
+            className="w-full text-left px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 block"
+            style={{ color: '#6B6B7A', background: 'transparent', textDecoration: 'none' }}
+          >
+            Careers
+          </Link>
           <button onClick={() => scrollTo('contact')}
             className="w-full py-3 rounded-xl text-sm font-semibold text-white mt-2"
             style={{ background: 'linear-gradient(135deg, #53105B, #8B1A9A)' }}>

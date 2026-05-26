@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import logoImg from '../assets/brand-logo.png';
 
 const Footer = () => {
@@ -147,6 +148,16 @@ const Footer = () => {
                     </button>
                   </li>
                 ))}
+                <li>
+                  <Link
+                    to="/careers"
+                    className="text-sm text-silver hover:text-chrome transition-colors duration-200 flex items-center gap-2 group"
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: '#53105B' }} />
+                    Careers
+                  </Link>
+                </li>
               </ul>
             </div>
 
