@@ -319,18 +319,18 @@ export default function SoftwareTech() {
           <div className="relative z-10 max-w-7xl mx-auto h-full flex flex-col st-container">
 
             {/* Header */}
-            <div className="st-header pt-10 pb-4 text-center flex-shrink-0">
+            <div className="st-header pt-10 pb-4 text-center flex-shrink-0 max-w-[1100px] m-auto">
               <div className="flex items-center justify-center gap-3 mb-2">
                 <div className="w-8 h-px" style={{ background: 'linear-gradient(90deg,transparent,#8B1A9A)' }} />
                 <span className="text-xs font-semibold tracking-widest uppercase text-silver">Software & Technology</span>
                 <div className="w-8 h-px" style={{ background: 'linear-gradient(90deg,#8B1A9A,transparent)' }} />
               </div>
               <h2 className="st-heading font-display font-black chrome-text leading-tight"
-                style={{ fontSize: 'clamp(1.4rem, 3.5vw, 3rem)' }}>
+                style={{ fontSize: 'clamp(1.6rem, 4vw, 4rem)' }}>
                 Software & Technology <span className="purple-text">Solutions</span>
               </h2>
-              <p className="st-subtext text-silver mt-1 max-w-lg mx-auto"
-                style={{ fontSize: 'clamp(0.75rem, 1.2vw, 1.05rem)' }}>
+              <p className="st-subtext text-silver mt-1 mb-1 mx-auto"
+                style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.25rem)' }}>
                 End-to-end technology services engineered to scale with your ambitions.
               </p>
             </div>

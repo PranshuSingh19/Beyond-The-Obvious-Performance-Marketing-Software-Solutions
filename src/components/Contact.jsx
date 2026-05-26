@@ -195,14 +195,14 @@ const Contact = () => {
         </div>
 
         {/* Main contact grid */}
-        <div className={`grid lg:grid-cols-5 gap-10 reveal-up ${revealed ? 'visible' : ''}`}
+        <div className={`grid lg:grid-cols-5 gap-6 lg:gap-10 reveal-up ${revealed ? 'visible' : ''}`}
           style={{ transitionDelay: '0.2s' }}>
 
           {/* Left — info */}
           <div className="lg:col-span-2 space-y-5">
             {contactInfo.map(({ icon, label, value, href }) => (
               <a key={label} href={href}
-                className="flex items-center gap-4 rounded-2xl p-5 group transition-all duration-300"
+                className="flex items-center gap-4 rounded-2xl p-5 group transition-all duration-300 min-w-0"
                 style={{ background: '#F8F7FF', border: '1px solid rgba(83,16,91,0.12)', boxShadow: '0 2px 10px rgba(83,16,91,0.06)' }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = 'rgba(83,16,91,0.4)';
@@ -217,9 +217,9 @@ const Contact = () => {
                   style={{ background: 'rgba(83,16,91,0.08)', border: '1px solid rgba(83,16,91,0.2)', color: '#53105B' }}>
                   {icon}
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <div className="text-xs font-semibold tracking-wider uppercase text-silver mb-0.5">{label}</div>
-                  <div className="font-semibold chrome-text text-sm">{value}</div>
+                  <div className="font-semibold chrome-text text-sm break-all">{value}</div>
                 </div>
               </a>
             ))}
@@ -257,7 +257,7 @@ const Contact = () => {
               <div className="h-0.5" style={{ background: 'linear-gradient(90deg, #53105B, #8B1A9A, transparent)' }} />
 
               {submitted ? (
-                <div className="flex flex-col items-center justify-center py-20 text-center px-8">
+                <div className="flex flex-col items-center justify-center py-20 text-center px-4 sm:px-8">
                   <div className="w-20 h-20 rounded-full flex items-center justify-center mb-6 float-anim"
                     style={{ background: '#00c231ff'}}>
                     {/* style={{ background: 'linear-gradient(135deg, #53105B, #8B1A9A)', boxShadow: '0 0 40px rgba(83,16,91,0.3)' }} */}
@@ -276,7 +276,7 @@ const Contact = () => {
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} noValidate className="p-8">
+                <form onSubmit={handleSubmit} noValidate className="p-4 sm:p-8">
                   <h3 className="font-display font-bold text-xl chrome-text mb-8">
                     Start a Conversation
                   </h3>

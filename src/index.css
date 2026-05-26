@@ -407,6 +407,14 @@ body {
    ───────────────────────────────────────────────────────────── */
 .hero-section { min-height: 100svh; }
 
+/* Mobile: let height shrink to content, no black gap */
+@media (max-width: 767px) {
+  .hero-section {
+    --hero-min-h: auto;
+    min-height: auto !important;
+  }
+}
+
 /* 1024 */
 @media (max-width: 1024px) {
   .hero-content { max-width: 860px; }
